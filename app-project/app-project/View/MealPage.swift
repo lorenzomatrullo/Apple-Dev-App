@@ -21,7 +21,7 @@ struct MealPage: View {
                 RecipesView(meal)
                 
                 HStack {
-                    Text("TIME: " + String(meal.timeToCook))
+                    Text("TIME: " + String(meal.timeToCook) + " minutes")
                 }
                 .padding(.top, 20)
             }
