@@ -14,18 +14,17 @@ struct MealPage: View {
         self.meal = meal
     }
     
-    
     var body: some View {
         VStack {
             Form {
                 RecipesView(meal)
                 
-                HStack {
+                VStack (alignment: .leading) {
                     Text("TIME: " + String(meal.timeToCook) + " minutes")
+                    Text("DIFFICULTY: ⭐️⭐️⭐️")
                 }
                 .padding(.top, 20)
             }
-            
             
             // Button to navigate to StepPageView
             NavigationLink(destination: StepPageView(meal)) {
@@ -41,7 +40,6 @@ struct MealPage: View {
         .navigationBarTitleDisplayMode(.inline)
     }
 }
-
 
 struct MealPage_Previews: PreviewProvider {
     static var previews: some View {
