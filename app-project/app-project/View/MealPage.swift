@@ -54,8 +54,7 @@ struct MealPage_Previews: PreviewProvider {
         let sampleMeal = RecipesList(
             recipeName: "Pasta",
             ingredients: "patate, provola",
-            numberOfSteps: "10 steps",
-            numberOfStepsValue: 10,
+            numberOfSteps: 10,
             imageName: "pasta",
             steps: []
         )

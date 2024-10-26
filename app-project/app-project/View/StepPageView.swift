@@ -50,7 +50,7 @@ struct StepPageView: View
             Spacer().frame(height: 20)
 
             // Display the current step information
-            Text("Step: \(cookingState.currentStep + 1) of \(meal.numberOfStepsValue)")
+            Text("Step: \(cookingState.currentStep + 1) of \(meal.numberOfSteps)")
                 .font(.title2)
                 .fontWeight(.bold)
                 .padding(.top, 10)
@@ -82,7 +82,7 @@ struct StepPageView: View
                 }
                 // Button to progress to the next step
                 Button(action: {
-                    if cookingState.currentStep < meal.numberOfStepsValue - 1 {
+                    if cookingState.currentStep < meal.numberOfSteps - 1 {
                         cookingState.currentStep += 1
                     }
                 }) {
@@ -104,8 +104,7 @@ struct StepPage_Previews: PreviewProvider {
         let sampleMeal = RecipesList(
             recipeName: "Pasta",
             ingredients: "patate, provola",
-            numberOfSteps: "10 steps",
-            numberOfStepsValue: 10,
+            numberOfSteps: 10,
             imageName: "pasta",
             steps:
                 [

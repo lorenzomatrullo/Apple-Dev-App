@@ -25,7 +25,7 @@ struct RecipesView: View {
                     .fontWeight(.medium)
                 
                 
-                Text (recipes.numberOfSteps)
+                Text (String(recipes.numberOfSteps) + " steps")
                     .font(.footnote)
                     .foregroundColor(.gray)
             }
