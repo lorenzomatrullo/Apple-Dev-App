@@ -1,8 +1,7 @@
 import Foundation
 import SwiftUI
 
-struct RecipesList: Hashable
-{
+struct RecipesList: Hashable {
     let recipeName: String
     let ingredients: String
     let numberOfSteps: Int
