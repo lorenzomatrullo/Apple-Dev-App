@@ -21,8 +21,7 @@ struct RecipesList: Hashable {
 }
 
 // Wrapper for steps variables
-struct RecipeStep : Hashable
-{
+struct RecipeStep : Hashable {
     let step: String
     let imageName: String
     let description: String
@@ -31,7 +30,6 @@ struct RecipeStep : Hashable
 }
 
 struct MealPageModel: Identifiable {
-
     var id = UUID()
     var meal: RecipesList
     var time: Int
@@ -45,7 +43,6 @@ struct MealPageModel: Identifiable {
 
 
 class Model: ObservableObject {
-    
 
     let recipes: [RecipesList] = [
         
@@ -57,7 +54,10 @@ class Model: ObservableObject {
             timeToCook: 15,
             steps:
                 [
-                RecipeStep(step: "1. Preparare la pasta", imageName: "pasta", description: """
+                RecipeStep(
+                    step: "1. Preparare la pasta",
+                    imageName: "pasta",
+                    description: """
                 Let’s gather all the ingredients and place them on a clean, accessible table. When you’re ready with everything on the table, say ‘ready.’
 
                 Ingredients:
@@ -69,10 +69,26 @@ class Model: ObservableObject {
                 • Fresh basil leaves (optional)
                 • Pasta (spaghetti, penne, or your choice)
                 • Grated Parmesan or Pecorino cheese (optional)
-                """),
-                RecipeStep(step: "2. Preparare le patate", imageName: "patate", description: "Place tomatoes in a large pot and cover with cold water. Bring just to a boil. Pour off water, and cover again with cold water. Peel the skin off tomatoes and cut into small pieces."),
-                RecipeStep(step: "3. Cuocere la pasta", imageName: "pasta", description: "Meanwhile, heat olive oil in a large skillet or pan, making sure there is enough to cover the bottom of the pan, and sauté garlic until opaque but not browned. Stir in tomato paste. Immediately stir in the tomatoes, salt, and pepper. Reduce heat, and simmer until pasta is ready, adding basil at the end."),
-                RecipeStep(step: "3. Cuocere la pasta", imageName: "pasta", description: "Drain pasta, do not rinse in cold water. Toss with a bit of olive oil, then mix into the sauce."),
+                """
+                ),
+                
+                RecipeStep(
+                    step: "2. Preparare le patate",
+                    imageName: "patate",
+                    description: "Place tomatoes in a large pot and cover with cold water. Bring just to a boil. Pour off water, and cover again with cold water. Peel the skin off tomatoes and cut into small pieces."
+                ),
+                
+                RecipeStep(
+                    step: "3. Cuocere la pasta",
+                    imageName: "pasta",
+                    description: "Meanwhile, heat olive oil in a large skillet or pan, making sure there is enough to cover the bottom of the pan, and sauté garlic until opaque but not browned. Stir in tomato paste. Immediately stir in the tomatoes, salt, and pepper. Reduce heat, and simmer until pasta is ready, adding basil at the end."
+                ),
+                
+                RecipeStep(
+                    step: "3. Cuocere la pasta",
+                    imageName: "pasta",
+                    description: "Drain pasta, do not rinse in cold water. Toss with a bit of olive oil, then mix into the sauce."
+                ),
             ]
         ),
         RecipesList(recipeName: "Pizza Salsiccia e Friarielli",
@@ -82,7 +98,10 @@ class Model: ObservableObject {
                     timeToCook: 8,
                     steps:
                         [
-                        RecipeStep(step: "1. Preparare la pasta", imageName: "pasta", description: """
+                        RecipeStep(
+                            step: "1. Preparare la pasta",
+                            imageName: "pasta",
+                            description: """
                         Ingredients:
                         - 2 Heck 97% Sausages
                         - 1 260g Neapolitan Dough ball
@@ -90,13 +109,30 @@ class Model: ObservableObject {
                         - 10g Smoked Mozzarella (scamorza)
                         - A pinch of grated Hard Cheese
                         - 2 handfuls of cooked Friarielli
-                        """),
-                        RecipeStep(step: "2. Preparare le patate", imageName: "patate", description: "Place tomatoes in a large pot and cover with cold water. Bring just to a boil. Pour off water, and cover again with cold water. Peel the skin off tomatoes and cut into small pieces."),
-                        RecipeStep(step: "3. Cuocere la pasta", imageName: "pasta", description: "Meanwhile, heat olive oil in a large skillet or pan, making sure there is enough to cover the bottom of the pan, and sauté garlic until opaque but not browned. Stir in tomato paste. Immediately stir in the tomatoes, salt, and pepper. Reduce heat, and simmer until pasta is ready, adding basil at the end."),
-                        RecipeStep(step: "3. Cuocere la pasta", imageName: "pasta", description: "Drain pasta, do not rinse in cold water. Toss with a bit of olive oil, then mix into the sauce."),
+                        """
+                        ),
+                        
+                        RecipeStep(
+                            step: "2. Preparare le patate",
+                            imageName: "patate",
+                            description: "Place tomatoes in a large pot and cover with cold water. Bring just to a boil. Pour off water, and cover again with cold water. Peel the skin off tomatoes and cut into small pieces."
+                        ),
+                        
+                        RecipeStep(
+                            step: "3. Cuocere la pasta",
+                            imageName: "pasta",
+                            description: "Meanwhile, heat olive oil in a large skillet or pan, making sure there is enough to cover the bottom of the pan, and sauté garlic until opaque but not browned. Stir in tomato paste. Immediately stir in the tomatoes, salt, and pepper. Reduce heat, and simmer until pasta is ready, adding basil at the end."
+                        ),
+                        
+                        RecipeStep(
+                            step: "3. Cuocere la pasta",
+                            imageName: "pasta",
+                            description: "Drain pasta, do not rinse in cold water. Toss with a bit of olive oil, then mix into the sauce."
+                        ),
                     ]
                 ),
     ]
+    
     
     @Published var mealPage = MealPageModel()
     @Published var displayingMealPage = false
