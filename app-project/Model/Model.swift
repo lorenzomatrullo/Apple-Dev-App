@@ -91,6 +91,7 @@ class Model: ObservableObject {
                 ),
             ]
         ),
+        
         RecipesList(recipeName: "Pizza Salsiccia e Friarielli",
                     ingredients: "salsiccia, friarielli",
                     numberOfSteps: 8,
