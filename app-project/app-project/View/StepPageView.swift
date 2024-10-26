@@ -1,19 +1,13 @@
-//
-//  StepPageView.swift
-//  app-project
-//
-//  Created by Mattia Silvestro on 26/10/24.
-//
-
+import Foundation
 import SwiftUI
 
-struct CookingState
-{
+
+struct CookingState {
     var currentStep: Int
 }
 
-struct StepPageView: View
-{
+
+struct StepPageView: View {
     @EnvironmentObject var model: Model
     
     private var meal: RecipesList
@@ -29,8 +23,7 @@ struct StepPageView: View
         self.meal = meal
     }
     
-    var body: some View
-    {
+    var body: some View {
         VStack(alignment: .center) {
             
             Text("Let's cook \(meal.recipeName)")
@@ -108,7 +101,10 @@ struct StepPage_Previews: PreviewProvider {
             imageName: "pasta",
             steps:
                 [
-                RecipeStep(step: "1. Preparare la pasta", imageName: "pasta", description: """
+                RecipeStep(
+                    step: "1. Preparare la pasta",
+                    imageName: "pasta",
+                    description: """
                     Let’s gather all the ingredients and place them on a clean, accessible table. When you’re ready with everything on the table, say ‘ready.’
 
                     Ingredients:
@@ -121,9 +117,24 @@ struct StepPage_Previews: PreviewProvider {
                     • Pasta (spaghetti, penne, or your choice)
                     • Grated Parmesan or Pecorino cheese (optional)
                     """),
-                RecipeStep(step: "2. Preparare le patate", imageName: "patate", description: "Place tomatoes in a large pot and cover with cold water. Bring just to a boil. Pour off water, and cover again with cold water. Peel the skin off tomatoes and cut into small pieces."),
-                RecipeStep(step: "3. Cuocere la pasta", imageName: "pasta", description: "Meanwhile, heat olive oil in a large skillet or pan, making sure there is enough to cover the bottom of the pan, and sauté garlic until opaque but not browned. Stir in tomato paste. Immediately stir in the tomatoes, salt, and pepper. Reduce heat, and simmer until pasta is ready, adding basil at the end."),
-                RecipeStep(step: "3. Cuocere la pasta", imageName: "pasta", description: "Drain pasta, do not rinse in cold water. Toss with a bit of olive oil, then mix into the sauce."),
+                
+                RecipeStep(
+                    step: "2. Preparare le patate",
+                    imageName: "patate",
+                    description: "Place tomatoes in a large pot and cover with cold water. Bring just to a boil. Pour off water, and cover again with cold water. Peel the skin off tomatoes and cut into small pieces."
+                ),
+                
+                RecipeStep(
+                    step: "3. Cuocere la pasta",
+                    imageName: "pasta",
+                    description: "Meanwhile, heat olive oil in a large skillet or pan, making sure there is enough to cover the bottom of the pan, and sauté garlic until opaque but not browned. Stir in tomato paste. Immediately stir in the tomatoes, salt, and pepper. Reduce heat, and simmer until pasta is ready, adding basil at the end."
+                ),
+                
+                RecipeStep(
+                    step: "3. Cuocere la pasta",
+                    imageName: "pasta",
+                    description: "Drain pasta, do not rinse in cold water. Toss with a bit of olive oil, then mix into the sauce."
+                ),
             ]
         )
         StepPageView(sampleMeal).environmentObject(Model())

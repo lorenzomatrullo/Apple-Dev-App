@@ -15,6 +15,7 @@ struct MealPage: View {
         self.meal = meal
     }
     
+    
     var body: some View {
         VStack {
             Form {
@@ -34,6 +35,7 @@ struct MealPage: View {
                 .padding(.top, 20)
             }
             
+            
             // Button to navigate to StepPageView
             NavigationLink(destination: StepPageView(meal)) {
                 Text("Let's Cook")
@@ -48,6 +50,7 @@ struct MealPage: View {
         .navigationBarTitleDisplayMode(.inline)
     }
 }
+
 
 struct MealPage_Previews: PreviewProvider {
     static var previews: some View {
