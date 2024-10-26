@@ -7,7 +7,6 @@ struct MealPage: View {
     @State var errorMessage = ""
     
     private var meal: RecipesList
-    @State var time: Int = 10
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
@@ -22,15 +21,7 @@ struct MealPage: View {
                 RecipesView(meal)
                 
                 HStack {
-                    Text("TIME:").font(.subheadline)
-                    
-                    TextField("", value: $time, formatter: NumberFormatter())
-                        .keyboardType(.numberPad)
-                        .onChange(of: time) { value in
-                            if value == 0 {
-                                time = 1
-                            }
-                        }
+                    Text("TIME: " + String(meal.timeToCook))
                 }
                 .padding(.top, 20)
             }
@@ -59,6 +50,7 @@ struct MealPage_Previews: PreviewProvider {
             ingredients: "patate, provola",
             numberOfSteps: 10,
             imageName: "pasta",
+            timeToCook: 10,
             steps: []
         )
         MealPage(sampleMeal).environmentObject(Model())

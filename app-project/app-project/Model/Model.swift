@@ -6,14 +6,16 @@ struct RecipesList: Hashable {
     let ingredients: String
     let numberOfSteps: Int
     let imageName: String
+    let timeToCook : Int
     let steps: [RecipeStep] // Array of steps
     
-    init(recipeName: String = "", ingredients: String = "", numberOfSteps: Int = 0, imageName: String = "", steps: [RecipeStep] = [])
+    init(recipeName: String = "", ingredients: String = "", numberOfSteps: Int = 0, imageName: String = "", timeToCook: Int = 0, steps: [RecipeStep] = [])
     {
         self.recipeName = recipeName
         self.ingredients = ingredients
         self.numberOfSteps = numberOfSteps
         self.imageName = imageName
+        self.timeToCook = timeToCook
         self.steps = steps
     }
 }
@@ -52,6 +54,7 @@ class Model: ObservableObject {
             ingredients: "patate, provola",
             numberOfSteps: 10,
             imageName: "pasta",
+            timeToCook: 15,
             steps:
                 [
                 RecipeStep(step: "1. Preparare la pasta", imageName: "pasta", description: """
@@ -76,6 +79,7 @@ class Model: ObservableObject {
                     ingredients: "salsiccia, friarielli",
                     numberOfSteps: 8,
                     imageName: "pizza",
+                    timeToCook: 8,
                     steps:
                         [
                         RecipeStep(step: "1. Preparare la pasta", imageName: "pasta", description: """
