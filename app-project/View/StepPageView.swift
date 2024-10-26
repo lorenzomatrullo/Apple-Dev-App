@@ -15,39 +15,40 @@ struct StepPageView: View {
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
       
-      // To keep track of the curent progress
-      @State private var cookingState = CookingState(currentStep: 0)
+    // Keep track of the current progress
+    @State private var cookingState = CookingState(currentStep: 0)
     
 
     init(_ meal: RecipesList) {
         self.meal = meal
     }
     
+    
     var body: some View {
         VStack(alignment: .center) {
             
-            Text("Let's cook \(meal.recipeName)")
-                    .font(.largeTitle)
-                    .padding(.top, 10)
+            Text("\(meal.recipeName)")
+                .font(.title)
+                .bold()
+                .padding(.top, 10)
             
             // Display the recipe image
             Image(meal.imageName)
                 .resizable()
                 .scaledToFit()
-                .frame(width: 200, height: 200)
+                .frame(width: 175, height: 175)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 
 
-            
             // Add some space
             Spacer().frame(height: 20)
 
             // Display the current step information
-            Text("Step: \(cookingState.currentStep + 1) of \(meal.numberOfSteps)")
+            Text("Step \(cookingState.currentStep + 1) of \(meal.numberOfSteps)")
                 .font(.title2)
                 .fontWeight(.bold)
-                .padding(.top, 10)
-                .padding(.vertical, 5)
+                .padding(.top, 5)
+                .padding(.vertical, 10)
 
             // Step description
             Text("\(meal.steps[cookingState.currentStep].description)")
@@ -57,9 +58,7 @@ struct StepPageView: View {
             
             // HStack for navigation buttons
             HStack {
-                
-                if(cookingState.currentStep > 0)
-                {
+                if(cookingState.currentStep > 0) {
                     // Button to return to the previous step
                     Button(action: {
                         if cookingState.currentStep > 0 {
@@ -73,6 +72,7 @@ struct StepPageView: View {
                             .cornerRadius(5)
                     }
                 }
+                
                 // Button to progress to the next step
                 Button(action: {
                     if cookingState.currentStep < meal.numberOfSteps - 1 {
@@ -86,18 +86,17 @@ struct StepPageView: View {
                         .cornerRadius(5)
                 }
             }
-            .padding(.top, 20)
-        }
-        .padding()
+        }.padding()
     }
 }
+
 
 struct StepPage_Previews: PreviewProvider {
     static var previews: some View {
         let sampleMeal = RecipesList(
             recipeName: "Pasta",
             ingredients: "patate, provola",
-            numberOfSteps: 10,
+            numberOfSteps: 12,
             imageName: "pasta",
             steps:
                 [
