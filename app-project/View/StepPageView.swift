@@ -27,7 +27,7 @@ struct StepPageView: View {
     var body: some View {
         VStack(alignment: .center) {
             
-            Text("\(meal.recipeName)")
+            Text(meal.recipeName)
                 .font(.title)
                 .bold()
                 .padding(.top, 10)
