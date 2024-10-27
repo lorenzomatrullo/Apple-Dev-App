@@ -26,15 +26,14 @@ struct MealPage: View {
                 .padding(.top, 20)
             }
             
-            // Button to navigate to StepPageView
             NavigationLink(destination: StepPageView(meal)) {
-                Text("Let's Cook")
-                    .foregroundColor(.white)
-                    .padding()
-                    .background(Color.blue)
-                    .cornerRadius(10)
+                Image(systemName: "arrowshape.right.fill")
             }
-            .padding(.top, 20)
+            .font(Font.system(size: 30))
+            .foregroundStyle(.green)
+            .tint(.red)
+            .buttonStyle(.bordered)
+            
         }
         .navigationTitle("Meal Page")
         .navigationBarTitleDisplayMode(.inline)

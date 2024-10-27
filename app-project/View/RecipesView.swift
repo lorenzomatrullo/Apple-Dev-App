@@ -14,7 +14,7 @@ struct RecipesView: View {
             Image(self.recipes.imageName)
                 .resizable()
                 .scaledToFit()
-                .frame(width: 60, height: 60)
+                .frame(width: 70, height: 70)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 .offset(x: -10, y: 5)
             
