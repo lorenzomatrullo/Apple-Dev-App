@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import AVFoundation
 
 // Model for a recipe
 struct RecipesList: Hashable {
@@ -25,6 +26,9 @@ struct RecipeStep: Hashable {
     let step: String
     let imageName: String
     let description: String
+    
+    let usesTimer: Bool
+    let timerTime: Int // time in seconds
 }
 
 struct MealPageModel: Identifiable {
@@ -63,7 +67,9 @@ class Model: ObservableObject {
                     • Fresh basil leaves (optional)
                     • Pasta (spaghetti, penne, or your choice)
                     • Grated Parmesan or Pecorino cheese (optional)
-                    """
+                    """,
+                    usesTimer: false,
+                    timerTime: 0
                 ),
                 
                 RecipeStep(
@@ -71,15 +77,17 @@ class Model: ObservableObject {
                     imageName: "patate",
                     description: """
                     Place tomatoes in a large pot and cover with cold water. Bring just to a boil. Pour off water, and cover again with cold water. Peel the skin off tomatoes and cut into small pieces.
-                    """
+                    """,
+                    usesTimer: false,
+                    timerTime: 0
                 ),
                 
                 RecipeStep(
                     step: "3. Cuocere la pasta",
                     imageName: "pasta",
-                    description: """
-                    Meanwhile, heat olive oil in a large skillet or pan, ensuring there is enough to cover the bottom of the pan. Sauté garlic until opaque but not browned. Stir in tomato paste. Immediately stir in the tomatoes, salt, and pepper. Reduce heat, and simmer until pasta is ready, adding basil at the end.
-                    """
+                    description: "For this step we need a timer, so you can see how long it takes to cook the pasta. Say 'START' when you're ready to cook the pasta.",
+                    usesTimer: true,
+                    timerTime: 5
                 ),
                 
                 RecipeStep(
@@ -87,7 +95,9 @@ class Model: ObservableObject {
                     imageName: "pasta",
                     description: """
                     Drain pasta; do not rinse in cold water. Toss with a bit of olive oil, then mix into the sauce.
-                    """
+                    """,
+                    usesTimer: false,
+                    timerTime: 0
                 ),
             ]
         ),
@@ -112,7 +122,9 @@ class Model: ObservableObject {
                     • 10g Smoked Mozzarella (scamorza)
                     • A pinch of grated Hard Cheese
                     • 2 handfuls of cooked Friarielli
-                    """
+                    """,
+                    usesTimer: false,
+                    timerTime: 0
                 ),
                 
                 RecipeStep(
@@ -120,7 +132,9 @@ class Model: ObservableObject {
                     imageName: "patate",
                     description: """
                     Place tomatoes in a large pot and cover with cold water. Bring just to a boil. Pour off water, and cover again with cold water. Peel the skin off tomatoes and cut into small pieces.
-                    """
+                    """,
+                    usesTimer: false,
+                    timerTime: 0
                 ),
                 
                 RecipeStep(
@@ -128,7 +142,9 @@ class Model: ObservableObject {
                     imageName: "pasta",
                     description: """
                     Meanwhile, heat olive oil in a large skillet or pan, ensuring there is enough to cover the bottom of the pan. Sauté garlic until opaque but not browned. Stir in tomato paste. Immediately stir in the tomatoes, salt, and pepper. Reduce heat, and simmer until pasta is ready, adding basil at the end.
-                    """
+                    """,
+                    usesTimer: false,
+                    timerTime: 0
                 ),
                 
                 RecipeStep(
@@ -136,11 +152,15 @@ class Model: ObservableObject {
                     imageName: "pasta",
                     description: """
                     Drain pasta; do not rinse in cold water. Toss with a bit of olive oil, then mix into the sauce.
-                    """
+                    """,
+                    usesTimer: false,
+                    timerTime: 0
                 ),
             ]
         ),
     ]
+    
+    
     
     @Published var mealPage = MealPageModel()
     @Published var displayingMealPage = false
@@ -153,4 +173,18 @@ class Model: ObservableObject {
             tabBarChanged = true
         }
     }
+}
+
+public func FormatTimeRemaining(_ seconds: Int) -> String
+{
+    let minutes = seconds / 60
+    let remainingSeconds = seconds % 60
+    return String(format: "%02d:%02d", minutes, remainingSeconds)
+}
+
+public func SpeakMessage(str: String, speechSynthesizer: AVSpeechSynthesizer) {
+    let voice = AVSpeechSynthesisVoice(language: "en-US")
+    let msgUtterance = AVSpeechUtterance(string: str)
+    msgUtterance.voice = voice
+    speechSynthesizer.speak(msgUtterance)
 }

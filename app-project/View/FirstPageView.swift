@@ -25,27 +25,12 @@ struct FirstPageView: View {
             )
             .onAppear {
                 if !hasSpokenWelcomeMessage {
-                    speakWelcomeMessage()
+                    SpeakMessage(str: "Welcome to the Recipe App! Explore delicious recipes.", speechSynthesizer: speechSynthesizer)
+                    SpeakMessage(str: "You can choose between:", speechSynthesizer: speechSynthesizer)
                     hasSpokenWelcomeMessage = true  // Update the state to prevent future calls
                 }
             }
         }
-    }
-    
-    private func speakWelcomeMessage() {
-        let welcomeMessage = "Welcome to the Recipe App! Explore delicious recipes."
-        let recipeChoices = "You can choose between: "
-        
-        let voice = AVSpeechSynthesisVoice(language: "en-US")
-        
-        let welcomeMessageUtterance = AVSpeechUtterance(string: welcomeMessage)
-        welcomeMessageUtterance.voice = voice
-        
-        let recipeChoiceUtterance = AVSpeechUtterance(string: recipeChoices)
-        recipeChoiceUtterance.voice = voice
-        
-        speechSynthesizer.speak(welcomeMessageUtterance)
-        speechSynthesizer.speak(recipeChoiceUtterance)
     }
 }
 

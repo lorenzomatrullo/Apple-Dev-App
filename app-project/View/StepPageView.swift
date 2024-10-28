@@ -1,17 +1,26 @@
 import Foundation
 import SwiftUI
+import AVFoundation
 
 
 struct CookingState {
     var currentStep: Int
 }
 
-
 struct StepPageView: View {
     @EnvironmentObject var model: Model
     
     private var meal: RecipesList
     
+    // Timer-related variables
+    @State var timeRemaining = 10               // time left
+    @State var timerStarted: Bool = false       // if timer has started
+    @State var isTimerRunning: Bool = false     // if timer is currently running
+    @State var isTimeUp: Bool = false           // if timer is up
+    
+    public let synth = AVSpeechSynthesizer()
+
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
       
@@ -55,8 +64,55 @@ struct StepPageView: View {
                 VStack {
                     Text("\(meal.steps[cookingState.currentStep].description)")
                         .padding(.bottom, 10)
+                    
+                    // Add timer in case it's needed for this step
+                    if meal.steps[cookingState.currentStep].usesTimer {
+                        Text(FormatTimeRemaining(timeRemaining))
+                            .onReceive(timer) { _ in
+                                if timerStarted && isTimerRunning && timeRemaining > 0 {
+                                    
+                                    // Timer decrement
+                                    timeRemaining -= 1
+                                    
+                                    // Check if time is up
+                                    if(timeRemaining == 0){
+                                        isTimeUp = true
+                                    }
+                                }
+                            }
+                            .foregroundColor(.blue)
+                            .font(.system(size: 60)) // Set to desired size
+                        
+                        // only if timer hasn't started, show the start button
+                        if(!timerStarted && !isTimeUp) {
+                            Button {
+                                timerStarted = true
+                                isTimerRunning = true
+                            } label: {
+                                Text("Start!")
+                                    .padding(.horizontal, 10) // Adjust horizontal padding
+                                    .padding(.vertical, 5)     // Adjust vertical padding
+                                    .font(.body)               // Change font size if needed
+                                    .background(Color.blue.opacity(0.7))
+                            }.buttonStyle(.borderedProminent)
+                        }
+                        
+                        // If time is up, show the text and speak the message
+                        if(isTimeUp)
+                        {
+                            Text("Time is up!")
+                                .font(.system(size: 40))
+                                .onAppear()
+                                {
+                                    SpeakMessage(str : "Time is up!", speechSynthesizer: synth)
+                                }
+
+                        }
+                    }
                 }
             }
+            
+            
 
             Spacer()
             
@@ -90,7 +146,21 @@ struct StepPageView: View {
                         .background(Color.blue.opacity(0.7))
                 }.buttonStyle(.borderedProminent)
             }
-        }.padding()
+        }
+        .padding()
+        .onChange(of: cookingState.currentStep) { newStep in
+                    if meal.steps[newStep].usesTimer {
+                        timeRemaining = meal.steps[newStep].timerTime
+                        isTimerRunning = false
+                        timerStarted = false
+                        isTimeUp = false
+                    } else {
+                        timeRemaining = 0
+                        isTimerRunning = false
+                        timerStarted = false
+                        isTimeUp = false
+                    }
+                }
     }
 }
 
@@ -119,24 +189,32 @@ struct StepPage_Previews: PreviewProvider {
                     • Fresh basil leaves (optional)
                     • Pasta (spaghetti, penne, or your choice)
                     • Grated Parmesan or Pecorino cheese (optional)
-                    """),
+                    """,
+                    usesTimer: false,
+                    timerTime: 0),
                 
                 RecipeStep(
                     step: "2. Preparare le patate",
                     imageName: "patate",
-                    description: "Place tomatoes in a large pot and cover with cold water. Bring just to a boil. Pour off water, and cover again with cold water. Peel the skin off tomatoes and cut into small pieces."
+                    description: "Place tomatoes in a large pot and cover with cold water. Bring just to a boil. Pour off water, and cover again with cold water. Peel the skin off tomatoes and cut into small pieces.",
+                    usesTimer: false,
+                    timerTime: 0
                 ),
                 
                 RecipeStep(
                     step: "3. Cuocere la pasta",
                     imageName: "pasta",
-                    description: "Meanwhile, heat olive oil in a large skillet or pan, making sure there is enough to cover the bottom of the pan, and sauté garlic until opaque but not browned. Stir in tomato paste. Immediately stir in the tomatoes, salt, and pepper. Reduce heat, and simmer until pasta is ready, adding basil at the end."
+                    description: "For this step we need a timer, so you can see how long it takes to cook the pasta. Say 'START' when you're ready to cook the pasta.",
+                    usesTimer: true,
+                    timerTime: 5
                 ),
                 
                 RecipeStep(
                     step: "3. Cuocere la pasta",
                     imageName: "pasta",
-                    description: "Drain pasta, do not rinse in cold water. Toss with a bit of olive oil, then mix into the sauce."
+                    description: "Drain pasta, do not rinse in cold water. Toss with a bit of olive oil, then mix into the sauce.",
+                    usesTimer: false,
+                    timerTime: 0
                 ),
             ]
         )
