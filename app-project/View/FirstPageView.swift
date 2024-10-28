@@ -34,11 +34,18 @@ struct FirstPageView: View {
     
     private func speakWelcomeMessage() {
         let welcomeMessage = "Welcome to the Recipe App! Explore delicious recipes."
-        let utterance = AVSpeechUtterance(string: welcomeMessage)
-        utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
-        // utterance.rate = 0.5
+        let recipeChoices = "You can choose between: "
         
-        speechSynthesizer.speak(utterance)
+        let voice = AVSpeechSynthesisVoice(language: "en-US")
+        
+        let welcomeMessageUtterance = AVSpeechUtterance(string: welcomeMessage)
+        welcomeMessageUtterance.voice = voice
+        
+        let recipeChoiceUtterance = AVSpeechUtterance(string: recipeChoices)
+        recipeChoiceUtterance.voice = voice
+        
+        speechSynthesizer.speak(welcomeMessageUtterance)
+        speechSynthesizer.speak(recipeChoiceUtterance)
     }
 }
 
