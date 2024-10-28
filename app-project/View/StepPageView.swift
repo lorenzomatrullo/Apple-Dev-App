@@ -51,8 +51,12 @@ struct StepPageView: View {
                 .padding(.vertical, 10)
 
             // Step description
-            Text("\(meal.steps[cookingState.currentStep].description)")
-                .padding(.bottom, 10)
+            ScrollView {
+                VStack {
+                    Text("\(meal.steps[cookingState.currentStep].description)")
+                        .padding(.bottom, 10)
+                }
+            }
 
             Spacer()
             
