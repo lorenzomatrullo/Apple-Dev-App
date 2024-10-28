@@ -60,31 +60,31 @@ struct StepPageView: View {
             HStack {
                 if(cookingState.currentStep > 0) {
                     // Button to return to the previous step
-                    Button(action: {
+                    Button {
                         if cookingState.currentStep > 0 {
                             cookingState.currentStep -= 1
                         }
-                    }) {
+                    } label: {
                         Text("Previous Step")
-                            .padding()
+                            .padding(.horizontal, 10) // Adjust horizontal padding
+                            .padding(.vertical, 5)     // Adjust vertical padding
+                            .font(.body)               // Change font size if needed
                             .background(Color.blue.opacity(0.7))
-                            .foregroundColor(.white)
-                            .cornerRadius(5)
-                    }
+                    }.buttonStyle(.borderedProminent)
                 }
                 
                 // Button to progress to the next step
-                Button(action: {
+                Button {
                     if cookingState.currentStep < meal.numberOfSteps - 1 {
                         cookingState.currentStep += 1
                     }
-                }) {
+                } label: {
                     Text("Next Step")
-                        .padding()
-                        .background(Color.green.opacity(0.7))
-                        .foregroundColor(.white)
-                        .cornerRadius(5)
-                }
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 5)
+                        .font(.body)
+                        .background(Color.blue.opacity(0.7))
+                }.buttonStyle(.borderedProminent)
             }
         }.padding()
     }

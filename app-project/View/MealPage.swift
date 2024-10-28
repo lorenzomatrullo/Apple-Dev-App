@@ -27,12 +27,14 @@ struct MealPage: View {
             }
             
             NavigationLink(destination: StepPageView(meal)) {
-                Image(systemName: "arrowshape.right.fill")
+                Text("START")
+                    .font(Font.system(size: 25))
+                    .bold()
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 5)
             }
-            .font(Font.system(size: 30))
-            .foregroundStyle(.green)
-            .tint(.red)
-            .buttonStyle(.bordered)
+            .buttonStyle(.borderedProminent)
+
             
         }
         .navigationTitle("Meal Page")
