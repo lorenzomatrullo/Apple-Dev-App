@@ -9,14 +9,20 @@ struct RecipesList: Hashable {
     let numberOfSteps: Int
     let imageName: String
     let timeToCook: Int
+    let vegan: Bool
+    let lactoseFree: Bool
+    let glutenFree: Bool
     let steps: [RecipeStep] // Array of steps
     
-    init(recipeName: String = "", ingredients: String = "", numberOfSteps: Int = 0, imageName: String = "", timeToCook: Int = 0, steps: [RecipeStep] = []) {
+    init(recipeName: String = "", ingredients: String = "", numberOfSteps: Int = 0, imageName: String = "", timeToCook: Int = 0, vegan: Bool = false, lactoseFree: Bool = false, glutenFree: Bool = false ,steps: [RecipeStep] = []) {
         self.recipeName = recipeName
         self.ingredients = ingredients
         self.numberOfSteps = numberOfSteps
         self.imageName = imageName
         self.timeToCook = timeToCook
+        self.vegan = vegan
+        self.lactoseFree = lactoseFree
+        self.glutenFree = glutenFree
         self.steps = steps
     }
 }
@@ -51,6 +57,8 @@ class Model: ObservableObject {
             numberOfSteps: 10,
             imageName: "pasta",
             timeToCook: 15,
+            vegan: true,
+            lactoseFree: true,
             steps: [
                 RecipeStep(
                     step: "1. Preparare la pasta",
@@ -108,6 +116,7 @@ class Model: ObservableObject {
             numberOfSteps: 8,
             imageName: "pizza",
             timeToCook: 8,
+            glutenFree: true,
             steps: [
                 RecipeStep(
                     step: "1. Preparare la pasta",
@@ -175,8 +184,7 @@ class Model: ObservableObject {
     }
 }
 
-public func FormatTimeRemaining(_ seconds: Int) -> String
-{
+public func FormatTimeRemaining(_ seconds: Int) -> String {
     let minutes = seconds / 60
     let remainingSeconds = seconds % 60
     return String(format: "%02d:%02d", minutes, remainingSeconds)
