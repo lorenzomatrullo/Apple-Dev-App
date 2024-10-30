@@ -16,6 +16,7 @@ struct StepPageView: View {
     @State var timeRemaining = 10               // time left
     @State var timerStarted: Bool = false       // if timer has started
     @State var isTimerRunning: Bool = false     // if timer is currently running
+    @State var isTimerPaused : Bool = false     // if timer is currently paused
     @State var isTimeUp: Bool = false           // if timer is up
     @State var repeatTimeInterval : Int = 5
     @State var repeatTimeCount: Int = 0
@@ -117,9 +118,61 @@ struct StepPageView: View {
                                     .padding(.vertical, 5)     // Adjust vertical padding
                                     .font(.body)               // Change font size if needed
                                     .background(Color.blue.opacity(0.7))
-                            }.buttonStyle(.borderedProminent)
+                                    .foregroundColor(.white) // Change text color if needed
+                                    .cornerRadius(5)
+                            }
                         }
-                        
+                        else if(timerStarted && isTimerRunning && !isTimeUp) {
+                            Button {
+                                isTimerRunning = false
+                                isTimerPaused = true
+                                SpeakMessage(str: "Timer paused!", speechSynthesizer: synth)
+                            } label: {
+                                Text("Pause")
+                                    .padding(.horizontal, 10) // Adjust horizontal padding
+                                    .padding(.vertical, 5)     // Adjust vertical padding
+                                    .font(.body)               // Change font size if needed
+                                    .background(Color.red.opacity(0.7))
+                                    .foregroundColor(.white) // Change text color if needed
+                                    .cornerRadius(5)
+                            }
+                        }
+                        else if(timerStarted && isTimerPaused) {
+                            HStack {
+                                Button {
+                                    isTimerRunning = true
+                                    isTimerPaused = false
+                                    SpeakMessage(str: "Timer resumed!", speechSynthesizer: synth)
+                                } label: {
+                                    Text("Resume")
+                                        .padding(.horizontal, 10) // Adjust horizontal padding
+                                        .padding(.vertical, 5)     // Adjust vertical padding
+                                        .font(.body)               // Change font size if needed
+                                        .background(Color.green.opacity(0.7))
+                                        .foregroundColor(.white) // Change text color if needed
+                                        .cornerRadius(5)
+                                    
+                                }
+                                
+                                Button {
+                                    timerStarted = false
+                                    isTimerRunning = false
+                                    isTimerPaused = false
+                                    timeRemaining = meal.steps[cookingState.currentStep].timerTime
+                                    repeatTimeCount = 0
+                                    SpeakMessage(str: "Timer stopped! Say Start to start a new timer.", speechSynthesizer: synth)
+                                } label: {
+                                    Text("Restart")
+                                        .padding(.horizontal, 10) // Adjust horizontal padding
+                                        .padding(.vertical, 5)     // Adjust vertical padding
+                                        .font(.body)               // Change font size if needed
+                                        .background(Color.red.opacity(0.7))
+                                        .foregroundColor(.white) // Change text color if needed
+                                        .cornerRadius(5)
+                                }
+                            }
+                        }
+                                
                         // If time is up, show the text and speak the message
                         if(isTimeUp)
                         {
