@@ -1,3 +1,3 @@
 # Apple Dev App
 
-<img width="471" alt="test1" src="https://github.com/user-attachments/assets/e60fe055-395d-4fa0-abeb-4b216b1fa77a">
+<img width="355" alt="Screenshot 2024-10-30 at 11 36 27" src="https://github.com/user-attachments/assets/14acd759-f1bd-4b5e-b637-636b3f81079a">
