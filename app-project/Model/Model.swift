@@ -60,7 +60,7 @@ class Model: ObservableObject {
         RecipesList(
             recipeName: "Pasta",
             ingredients: "100g fusilli, 50g tomato sauce, 100g mozzarella cheese, 100g basil leaves",
-            numberOfSteps: 10,
+            numberOfSteps: 4,
             imageName: "pasta",
             timeToCook: 15,
             difficulty: "⭐️⭐️⭐️",
@@ -122,7 +122,7 @@ class Model: ObservableObject {
         RecipesList(
             recipeName: "Pizza Salsiccia e Friarielli",
             ingredients: "salsiccia, friarielli",
-            numberOfSteps: 8,
+            numberOfSteps: 4,
             imageName: "pizza",
             timeToCook: 8,
             difficulty: "⭐️⭐️⭐️⭐️",

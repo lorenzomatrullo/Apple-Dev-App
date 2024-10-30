@@ -209,17 +209,31 @@ struct StepPageView: View {
                 }
                 
                 // Button to progress to the next step
-                Button {
-                    if cookingState.currentStep < meal.numberOfSteps - 1 {
-                        cookingState.currentStep += 1
-                    }
-                } label: {
-                    Text("Next Step")
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 5)
-                        .font(.body)
-                        .background(Color.blue.opacity(0.7))
-                }.buttonStyle(.borderedProminent)
+                if(cookingState.currentStep < meal.numberOfSteps - 1) {
+                    Button {
+                        if cookingState.currentStep < meal.numberOfSteps - 1 {
+                            cookingState.currentStep += 1
+                        }
+                    } label: {
+                        Text("Next Step")
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 5)
+                            .font(.body)
+                            .background(Color.blue.opacity(0.7))
+                    }.buttonStyle(.borderedProminent)
+                }
+                // If it's the final step, we want another button with another function call instead of the 'Next Step' one
+                else if cookingState.currentStep == meal.numberOfSteps - 1 {
+                    Button {
+                        
+                    } label: {
+                        Text("Complete")
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 5)
+                            .font(.body)
+                            .background(Color.blue.opacity(0.7))
+                    }.buttonStyle(.borderedProminent)
+                }
             }
         }
         .padding()
@@ -247,7 +261,7 @@ struct StepPage_Previews: PreviewProvider {
         let sampleMeal = RecipesList(
             recipeName: "Pasta",
             ingredients: "patate, provola",
-            numberOfSteps: 12,
+            numberOfSteps: 4,
             imageName: "pasta",
             steps:
                 [
