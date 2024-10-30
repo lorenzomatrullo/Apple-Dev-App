@@ -52,10 +52,10 @@ struct MealPageModel: Identifiable {
 
 // Main view model
 class Model: ObservableObject {
-    let recipes: [RecipesList] = [
+    let meal: [RecipesList] = [
         RecipesList(
             recipeName: "Pasta",
-            ingredients: "patate, provola",
+            ingredients: "100g fusilli, 50g tomato sauce, 100g mozzarella cheese, 100g basil leaves",
             numberOfSteps: 10,
             imageName: "pasta",
             timeToCook: 15,

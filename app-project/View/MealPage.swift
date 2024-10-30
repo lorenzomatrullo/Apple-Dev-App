@@ -18,7 +18,7 @@ struct MealPage: View {
         VStack {
             Form {
                 RecipesView(meal)
-                
+
                 VStack(alignment: .leading) {
                     HStack {
                         Text("TIME:")
@@ -35,7 +35,6 @@ struct MealPage: View {
                     HStack {
                         Text("DIFFICULTY:")
                             .font(.headline)
-                            .foregroundColor(.primary)
                         
                         Spacer()
                         
@@ -44,7 +43,24 @@ struct MealPage: View {
                     }
                     .padding(.vertical, 5)
                 }
-                .padding(.top, 20)
+                .padding(.top, 10)
+                
+                Section(header: Text("Ingredients")
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                ) {
+                    // Split the ingredients string into an array
+                    let ingredientsList = meal.ingredients.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }
+                    
+                    ForEach(ingredientsList, id: \.self) { ingredient in
+                        HStack {
+                            Text(ingredient)
+                                .font(.subheadline)
+                            Spacer()
+                        }
+                    }
+                }
+                
             }
             
             NavigationLink(destination: StepPageView(meal)) {
@@ -53,7 +69,7 @@ struct MealPage: View {
                     .bold()
                     .padding(.horizontal, 20)
                     .padding(.vertical, 5)
-                    .background(.blue)
+                    .background(Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(8)
             }
