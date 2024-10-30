@@ -104,7 +104,7 @@ class Model: ObservableObject {
                     imageName: "pasta",
                     description: "For this step we need a timer, so you can see how long it takes to cook the pasta. Say 'START' when you're ready to cook the pasta.",
                     usesTimer: true,
-                    timerTime: 5
+                    timerTime: 30
                 ),
                 
                 RecipeStep(
