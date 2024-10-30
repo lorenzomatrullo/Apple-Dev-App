@@ -2,11 +2,6 @@ import Foundation
 import SwiftUI
 import AVFoundation
 
-
-struct CookingState {
-    var currentStep: Int
-}
-
 struct StepPageView: View {
     @EnvironmentObject var model: Model
     
@@ -237,6 +232,20 @@ struct StepPageView: View {
             }
         }
         .padding()
+        .navigationTitle("")
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationBarItems(trailing: Button(action: {
+                    // Action for the help button
+                    HelpButtonPressed(status: HelpButtonState.STEP_PAGE, synth: synth, meal: meal, cookingState: cookingState)
+                }) {
+                    Text("?")
+                        .font(.title)
+                        .foregroundColor(.white)
+                        .frame(width: 44, height: 44) // Size of the button
+                        .background(Color.red)
+                        .clipShape(Circle()) // Makes the button circular
+                        .shadow(radius: 5) // Optional shadow
+                })
         .onChange(of: cookingState.currentStep) { newStep in
                     if meal.steps[newStep].usesTimer {
                         timeRemaining = meal.steps[newStep].timerTime
