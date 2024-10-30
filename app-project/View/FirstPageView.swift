@@ -11,7 +11,7 @@ struct FirstPageView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(self.model.recipes, id: \.self) { item in
+                ForEach(self.model.meal, id: \.self) { item in
                     NavigationLink(destination: MealPage(item)) {
                         RecipesView(item)
                     }
