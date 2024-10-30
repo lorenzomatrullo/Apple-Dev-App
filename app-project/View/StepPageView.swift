@@ -17,6 +17,8 @@ struct StepPageView: View {
     @State var timerStarted: Bool = false       // if timer has started
     @State var isTimerRunning: Bool = false     // if timer is currently running
     @State var isTimeUp: Bool = false           // if timer is up
+    @State var repeatTimeInterval : Int = 5
+    @State var repeatTimeCount: Int = 0
     
     public let synth = AVSpeechSynthesizer()
 
@@ -74,9 +76,29 @@ struct StepPageView: View {
                                     // Timer decrement
                                     timeRemaining -= 1
                                     
+                                    repeatTimeCount += 1;
+                                    
                                     // Check if time is up
                                     if(timeRemaining == 0){
                                         isTimeUp = true
+                                    }
+                                    else
+                                    {
+                                        if(repeatTimeCount >= repeatTimeInterval) {
+                                            // Read the time left aloud
+                                            let remainingMinutes = timeRemaining / 60
+                                            let remainingSeconds = timeRemaining % 60
+                                            
+                                            if(remainingMinutes > 0) {
+                                                SpeakMessage(str: "Time left: \(remainingMinutes) minutes and \(remainingSeconds) seconds", speechSynthesizer: synth)
+                                            }
+                                            else {
+                                                SpeakMessage(str: "Time left: \(remainingSeconds) seconds", speechSynthesizer: synth)
+                                            }
+                                                
+                                            
+                                            repeatTimeCount = 0;
+                                        }
                                     }
                                 }
                             }
@@ -88,6 +110,7 @@ struct StepPageView: View {
                             Button {
                                 timerStarted = true
                                 isTimerRunning = true
+                                SpeakMessage(str: "Timer started!", speechSynthesizer: synth)
                             } label: {
                                 Text("Start!")
                                     .padding(.horizontal, 10) // Adjust horizontal padding
@@ -106,7 +129,6 @@ struct StepPageView: View {
                                 {
                                     SpeakMessage(str : "Time is up!", speechSynthesizer: synth)
                                 }
-
                         }
                     }
                 }
@@ -154,11 +176,13 @@ struct StepPageView: View {
                         isTimerRunning = false
                         timerStarted = false
                         isTimeUp = false
+                        repeatTimeCount = 0;
                     } else {
                         timeRemaining = 0
                         isTimerRunning = false
                         timerStarted = false
                         isTimeUp = false
+                        repeatTimeCount = 0
                     }
                 }
     }
@@ -206,7 +230,7 @@ struct StepPage_Previews: PreviewProvider {
                     imageName: "pasta",
                     description: "For this step we need a timer, so you can see how long it takes to cook the pasta. Say 'START' when you're ready to cook the pasta.",
                     usesTimer: true,
-                    timerTime: 5
+                    timerTime: 30
                 ),
                 
                 RecipeStep(
