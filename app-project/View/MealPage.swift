@@ -19,23 +19,45 @@ struct MealPage: View {
             Form {
                 RecipesView(meal)
                 
-                VStack (alignment: .leading) {
-                    Text("TIME: " + String(meal.timeToCook) + " minutes")
-                    Text("DIFFICULTY: ⭐️⭐️⭐️")
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text("TIME:")
+                            .font(.headline)
+                            .foregroundColor(.primary)
+                        
+                        Spacer()
+                        
+                        Text("\(meal.timeToCook) minutes")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                    }
+
+                    HStack {
+                        Text("DIFFICULTY:")
+                            .font(.headline)
+                            .foregroundColor(.primary)
+                        
+                        Spacer()
+                        
+                        Text(meal.difficulty)
+                            .font(.subheadline)
+                    }
+                    .padding(.vertical, 5)
                 }
                 .padding(.top, 20)
             }
             
             NavigationLink(destination: StepPageView(meal)) {
                 Text("START")
-                    .font(Font.system(size: 25))
+                    .font(.system(size: 25))
                     .bold()
                     .padding(.horizontal, 20)
                     .padding(.vertical, 5)
+                    .background(Color.blue) // Optional: add a background color
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
             }
             .buttonStyle(.borderedProminent)
-
-            
         }
         .navigationTitle("Meal Page")
         .navigationBarTitleDisplayMode(.inline)
