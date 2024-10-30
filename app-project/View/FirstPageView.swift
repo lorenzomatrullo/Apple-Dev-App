@@ -4,8 +4,9 @@ import AVFoundation
 
 struct FirstPageView: View {
     @EnvironmentObject var model: Model
+    
     private let speechSynthesizer = AVSpeechSynthesizer()
-    @State private var hasSpokenWelcomeMessage = false  // Track if the message has been spoken
+    @State private var hasSpokenWelcomeMessage = false
     
     var body: some View {
         NavigationView {
@@ -20,22 +21,18 @@ struct FirstPageView: View {
             .navigationBarItems(leading: Text("Recipes")
                 .font(.title)
                 .bold()
-                .foregroundColor(.primary)
-                .padding(.top, 15)
+                .padding(.top, 100)
+                //.padding(.top, 100)
             )
             .onAppear {
                 if !hasSpokenWelcomeMessage {
                     SpeakMessage(str: "Welcome to the Recipe App! Explore delicious recipes.", speechSynthesizer: speechSynthesizer)
                     SpeakMessage(str: "You can choose between:", speechSynthesizer: speechSynthesizer)
-                    hasSpokenWelcomeMessage = true  // Update the state to prevent future calls
+                    hasSpokenWelcomeMessage = true
                 }
             }
+            //.padding(.top, 30) // this moves the recipes
+            //.background(Color(red: 242/255, green: 242/255, blue: 247/255))
         }
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        FirstPageView().environmentObject(Model())
     }
 }

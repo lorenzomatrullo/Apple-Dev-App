@@ -27,7 +27,6 @@ struct RecipesView: View {
                     .foregroundColor(.gray)
                 
                 HStack(spacing: 5) { // Horizontal stack for labels
-                    // Conditionally display the "Vegan" label
                     if meal.vegan {
                         Text("Vegan")
                             .font(.system(size: 14))
@@ -42,7 +41,6 @@ struct RecipesView: View {
                             )
                     }
                     
-                    // Conditionally display the "Lactose Free" label
                     if meal.lactoseFree {
                         Text("Lactose Free")
                             .font(.system(size: 14))

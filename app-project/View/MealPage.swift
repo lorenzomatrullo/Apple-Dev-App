@@ -53,7 +53,7 @@ struct MealPage: View {
                     .bold()
                     .padding(.horizontal, 20)
                     .padding(.vertical, 5)
-                    .background(Color.blue) // Optional: add a background color
+                    .background(.blue)
                     .foregroundColor(.white)
                     .cornerRadius(8)
             }
@@ -61,19 +61,5 @@ struct MealPage: View {
         }
         .navigationTitle("Meal Page")
         .navigationBarTitleDisplayMode(.inline)
-    }
-}
-
-struct MealPage_Previews: PreviewProvider {
-    static var previews: some View {
-        let sampleMeal = RecipesList(
-            recipeName: "Pasta",
-            ingredients: "patate, provola",
-            numberOfSteps: 10,
-            imageName: "pasta",
-            timeToCook: 10,
-            steps: []
-        )
-        MealPage(sampleMeal).environmentObject(Model())
     }
 }
