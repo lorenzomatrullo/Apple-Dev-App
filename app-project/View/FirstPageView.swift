@@ -21,7 +21,7 @@ struct FirstPageView: View {
             .navigationBarItems(leading: Text("Recipes")
                 .font(.title)
                 .bold()
-                .padding(.top, 100)
+                .padding(.top, 20) // if you put a value over 20 the text is gonna get cutted
                 //.padding(.top, 100)
             )
             .onAppear {
