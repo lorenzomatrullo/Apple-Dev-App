@@ -98,6 +98,7 @@ struct MealPage: View {
                     .cornerRadius(8)
             }
             .buttonStyle(.borderedProminent)
+            .accessibilityInputLabels(["start"])
         }
         .navigationTitle("Meal Page")
         .navigationBarTitleDisplayMode(.inline)

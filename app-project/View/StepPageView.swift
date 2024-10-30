@@ -200,7 +200,9 @@ struct StepPageView: View {
                             .padding(.vertical, 5)     // Adjust vertical padding
                             .font(.body)               // Change font size if needed
                             .background(Color.blue.opacity(0.7))
-                    }.buttonStyle(.borderedProminent)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .accessibilityInputLabels(["previous step"])
                 }
                 
                 // Button to progress to the next step
@@ -215,7 +217,9 @@ struct StepPageView: View {
                             .padding(.vertical, 5)
                             .font(.body)
                             .background(Color.blue.opacity(0.7))
-                    }.buttonStyle(.borderedProminent)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .accessibilityInputLabels(["next step"])
                 }
                 // If it's the final step, we want another button with another function call instead of the 'Next Step' one
                 else if cookingState.currentStep == meal.numberOfSteps - 1 {
