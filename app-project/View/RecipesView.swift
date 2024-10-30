@@ -2,15 +2,15 @@ import Foundation
 import SwiftUI
 
 struct RecipesView: View {
-    private var recipes: RecipesList
+    private var meal: RecipesList
     
     init(_ recipes: RecipesList) {
-        self.recipes = recipes
+        self.meal = recipes
     }
     
     var body: some View {
         HStack(alignment: .center, spacing: 5) {
-            Image(self.recipes.imageName)
+            Image(self.meal.imageName)
                 .resizable()
                 .scaledToFit()
                 .frame(width: 70, height: 70)
@@ -18,17 +18,17 @@ struct RecipesView: View {
                 .offset(x: -10, y: 5)
             
             VStack(alignment: .leading) {
-                Text(recipes.recipeName)
+                Text(meal.recipeName)
                     .font(.system(size: 18))
                     .fontWeight(.medium)
                 
-                Text("\(recipes.numberOfSteps) steps")
+                Text("\(meal.numberOfSteps) steps")
                     .font(.footnote)
                     .foregroundColor(.gray)
                 
                 HStack(spacing: 5) { // Horizontal stack for labels
                     // Conditionally display the "Vegan" label
-                    if recipes.vegan {
+                    if meal.vegan {
                         Text("Vegan")
                             .font(.system(size: 14))
                             .bold()
@@ -43,7 +43,7 @@ struct RecipesView: View {
                     }
                     
                     // Conditionally display the "Lactose Free" label
-                    if recipes.lactoseFree {
+                    if meal.lactoseFree {
                         Text("Lactose Free")
                             .font(.system(size: 14))
                             .bold()
@@ -57,7 +57,7 @@ struct RecipesView: View {
                             )
                     }
                     
-                    if recipes.glutenFree {
+                    if meal.glutenFree {
                         Text("Gluten Free")
                             .font(.system(size: 14))
                             .bold()
