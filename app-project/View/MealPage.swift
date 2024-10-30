@@ -41,7 +41,29 @@ struct MealPage: View {
                         Text(meal.difficulty)
                             .font(.subheadline)
                     }
-                    .padding(.vertical, 5)
+                    //.padding(.vertical, 5)
+                    
+                    HStack {
+                        Text("PORTIONS:")
+                            .font(.headline)
+                        
+                        Spacer()
+                        
+                        Text("\(meal.portions)")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                    }
+                    
+                    HStack {
+                        Text("CALORIES:")
+                            .font(.headline)
+                        
+                        Spacer()
+                        
+                        Text("\(meal.calories)kcal")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                    }
                 }
                 .padding(.top, 10)
                 

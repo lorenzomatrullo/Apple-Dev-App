@@ -10,18 +10,22 @@ struct RecipesList: Hashable {
     let imageName: String
     let timeToCook: Int
     let difficulty: String
+    let portions: Int
+    let calories: Int
     let vegan: Bool
     let lactoseFree: Bool
     let glutenFree: Bool
     let steps: [RecipeStep] // Array of steps
     
-    init(recipeName: String = "", ingredients: String = "", numberOfSteps: Int = 0, imageName: String = "", timeToCook: Int = 0, difficulty: String = "" ,vegan: Bool = false, lactoseFree: Bool = false, glutenFree: Bool = false ,steps: [RecipeStep] = []) {
+    init(recipeName: String = "", ingredients: String = "", numberOfSteps: Int = 0, imageName: String = "", timeToCook: Int = 0, difficulty: String = "", portions: Int = 1, calories: Int = 0, vegan: Bool = false, lactoseFree: Bool = false, glutenFree: Bool = false ,steps: [RecipeStep] = []) {
         self.recipeName = recipeName
         self.ingredients = ingredients
         self.numberOfSteps = numberOfSteps
         self.imageName = imageName
         self.timeToCook = timeToCook
         self.difficulty = difficulty
+        self.portions = portions
+        self.calories = calories
         self.vegan = vegan
         self.lactoseFree = lactoseFree
         self.glutenFree = glutenFree
@@ -60,6 +64,8 @@ class Model: ObservableObject {
             imageName: "pasta",
             timeToCook: 15,
             difficulty: "⭐️⭐️⭐️",
+            portions: 2,
+            calories: 300,
             vegan: true,
             lactoseFree: true,
             steps: [
