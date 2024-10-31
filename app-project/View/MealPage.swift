@@ -46,12 +46,12 @@ struct MealPage: View {
                     //.padding(.vertical, 5)
                     
                     HStack {
-                        Text("PORTIONS:")
+                        Text("SERVINGS:")
                             .font(.headline)
                         
                         Spacer()
                         
-                        Text("\(meal.portions)")
+                        Text("\(meal.servings)")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                     }
