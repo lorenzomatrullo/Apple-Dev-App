@@ -18,6 +18,7 @@ public struct RecipesList: Hashable {
     let steps: [RecipeStep] // Array of steps
     
     init(recipeName: String = "", ingredients: String = "", numberOfSteps: Int = 0, imageName: String = "", difficulty: String = "", timeToCook: Int = 0, calories: Int = 0, servings: Int = 1, vegetarian: Bool = false, lactoseFree: Bool = false, glutenFree: Bool = false ,steps: [RecipeStep] = []) {
+        
         self.recipeName = recipeName
         self.ingredients = ingredients
         self.numberOfSteps = numberOfSteps
@@ -83,16 +84,6 @@ class Model: ObservableObject {
                     imageName: "pasta",
                     description: """
                     Let’s gather all the ingredients and place them on a clean, accessible table. When you’re ready with everything on the table, say ‘ready.’
-
-                    Ingredients:
-                    • Olive oil
-                    • Garlic
-                    • Canned tomato sauce
-                    • Salt
-                    • Pepper
-                    • Fresh basil leaves (optional)
-                    • Pasta (spaghetti, penne, or your choice)
-                    • Grated Parmesan or Pecorino cheese (optional)
                     """,
                     usesTimer: false,
                     timerTime: 0
