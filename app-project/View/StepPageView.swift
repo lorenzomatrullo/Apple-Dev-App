@@ -49,7 +49,7 @@ struct StepPageView: View {
 
             // Add some space
             Spacer().frame(height: 20)
-
+                
             // Display the current step information
             Text("Step \(cookingState.currentStep + 1) of \(meal.numberOfSteps)")
                 .font(.title2)
@@ -250,8 +250,21 @@ struct StepPageView: View {
                         .clipShape(Circle()) // Makes the button circular
                         .shadow(radius: 5) // Optional shadow
                 })
-        .onChange(of: cookingState.currentStep) { newStep in
-                    if meal.steps[newStep].usesTimer {
+                .onAppear() {
+                    // Start
+                    
+                    SpeakMessage(str: "We are at step \(cookingState.currentStep + 1) of \(meal.numberOfSteps).", speechSynthesizer: synth)
+                    
+                    SpeakMessage(str: meal.steps[cookingState.currentStep].description, speechSynthesizer: synth)
+                }
+                .onChange(of: cookingState.currentStep) { newStep in
+                                
+                    SpeakMessage(str: "We are at step \(cookingState.currentStep + 1) of \(meal.numberOfSteps).", speechSynthesizer: synth)
+                    
+                    // Update
+            SpeakMessage(str: meal.steps[cookingState.currentStep].description, speechSynthesizer: synth)
+            
+            if meal.steps[newStep].usesTimer {
                         timeRemaining = meal.steps[newStep].timerTime
                         isTimerRunning = false
                         timerStarted = false
