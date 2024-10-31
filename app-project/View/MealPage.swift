@@ -33,28 +33,6 @@ struct MealPage: View {
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                     }
-
-                    HStack {
-                        Text("DIFFICULTY:")
-                            .font(.headline)
-                        
-                        Spacer()
-                        
-                        Text(meal.difficulty)
-                            .font(.subheadline)
-                    }
-                    //.padding(.vertical, 5)
-                    
-                    HStack {
-                        Text("SERVINGS:")
-                            .font(.headline)
-                        
-                        Spacer()
-                        
-                        Text("\(meal.servings)")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                    }
                     
                     HStack {
                         Text("CALORIES:")
@@ -63,6 +41,17 @@ struct MealPage: View {
                         Spacer()
                         
                         Text("\(meal.calories)kcal")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                    }
+                    
+                    HStack {
+                        Text("SERVINGS:")
+                            .font(.headline)
+                        
+                        Spacer()
+                        
+                        Text("\(meal.servings)")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                     }

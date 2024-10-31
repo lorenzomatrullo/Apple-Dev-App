@@ -26,18 +26,58 @@ struct RecipesView: View {
                     .font(.footnote)
                     .foregroundColor(.gray)
                 
-                HStack(spacing: 5) { // Horizontal stack for labels
-                    if meal.vegan {
-                        Text("Vegan")
+                HStack(spacing: 5) {
+                    
+                    if meal.difficulty == "Easy" {
+                        HStack(spacing: 5) {
+                            Image(systemName: "fork.knife.circle")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 20, height: 20)
+
+                            
+                            Text("Easy")
+                                .font(.system(size: 14))
+                                .bold()
+                                .foregroundColor(.black)
+                        }
+                        .padding(5)
+                        .background(.white)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(.black.opacity(0.3), lineWidth: 2)
+                        )
+                    } else if meal.difficulty == "Medium" {
+                        HStack(spacing: 5) {
+                            Image(systemName: "fork.knife.circle")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 20, height: 20)
+
+                            
+                            Text("Medium")
+                                .font(.system(size: 14))
+                                .bold()
+                                .foregroundColor(.black)
+                        }
+                        .padding(5)
+                        .background(.white)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(.black.opacity(0.3), lineWidth: 2)
+                        )
+                    }
+                    
+                    if meal.vegetarian {
+                        Text("Vegetarian")
                             .font(.system(size: 14))
                             .bold()
                             .padding(5)
-                            .background(Color.green)
+                            .background(.green)
                             .foregroundColor(.white)
-                            .cornerRadius(8)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.black.opacity(0.3), lineWidth: 2)
+                                    .stroke(.black.opacity(0.3), lineWidth: 2)
                             )
                     }
                     
@@ -46,12 +86,11 @@ struct RecipesView: View {
                             .font(.system(size: 14))
                             .bold()
                             .padding(5)
-                            .background(Color.blue)
+                            .background(.blue)
                             .foregroundColor(.white)
-                            .cornerRadius(8)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.black.opacity(0.3), lineWidth: 2)
+                                    .stroke(.black.opacity(0.3), lineWidth: 2)
                             )
                     }
                     
@@ -62,10 +101,9 @@ struct RecipesView: View {
                             .padding(5)
                             .background(.orange)
                             .foregroundColor(.white)
-                            .cornerRadius(8)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.black.opacity(0.3), lineWidth: 2)
+                                    .stroke(.black.opacity(0.3), lineWidth: 2)
                             )
                     }
                 }

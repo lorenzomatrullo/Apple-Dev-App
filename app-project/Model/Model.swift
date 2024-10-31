@@ -8,25 +8,25 @@ public struct RecipesList: Hashable {
     let ingredients: String
     let numberOfSteps: Int
     let imageName: String
-    let timeToCook: Int
     let difficulty: String
-    let servings: Int
+    let timeToCook: Int
     let calories: Int
-    let vegan: Bool
+    let servings: Int
+    let vegetarian: Bool
     let lactoseFree: Bool
     let glutenFree: Bool
     let steps: [RecipeStep] // Array of steps
     
-    init(recipeName: String = "", ingredients: String = "", numberOfSteps: Int = 0, imageName: String = "", timeToCook: Int = 0, difficulty: String = "", servings: Int = 1, calories: Int = 0, vegan: Bool = false, lactoseFree: Bool = false, glutenFree: Bool = false ,steps: [RecipeStep] = []) {
+    init(recipeName: String = "", ingredients: String = "", numberOfSteps: Int = 0, imageName: String = "", difficulty: String = "", timeToCook: Int = 0, calories: Int = 0, servings: Int = 1, vegetarian: Bool = false, lactoseFree: Bool = false, glutenFree: Bool = false ,steps: [RecipeStep] = []) {
         self.recipeName = recipeName
         self.ingredients = ingredients
         self.numberOfSteps = numberOfSteps
         self.imageName = imageName
-        self.timeToCook = timeToCook
         self.difficulty = difficulty
-        self.servings = servings
+        self.timeToCook = timeToCook
         self.calories = calories
-        self.vegan = vegan
+        self.servings = servings
+        self.vegetarian = vegetarian
         self.lactoseFree = lactoseFree
         self.glutenFree = glutenFree
         self.steps = steps
@@ -47,8 +47,7 @@ public struct CookingState {
     var currentStep: Int
 }
 
-public enum HelpButtonState
-{
+public enum HelpButtonState {
     case HOME_PAGE
     case MEAL_PAGE
     case STEP_PAGE
@@ -69,16 +68,15 @@ struct MealPageModel: Identifiable {
 class Model: ObservableObject {
     let meal: [RecipesList] = [
         RecipesList(
-            recipeName: "Pasta",
-            ingredients: "100g fusilli, 50g tomato sauce, 100g mozzarella cheese, 100g basil leaves",
+            recipeName: "Tomato Pasta",
+            ingredients: "80g pennette pasta, 150g fresh tomatos, 1 tablespoon of olive oil, 1 garlic clove, 2 pinches of salt, few basil leaves, grated parmesan cheese",
             numberOfSteps: 4,
             imageName: "pasta",
-            timeToCook: 15,
-            difficulty: "⭐️⭐️⭐️",
-            servings: 2,
-            calories: 300,
-            vegan: true,
-            lactoseFree: true,
+            difficulty: "Easy",
+            timeToCook: 20,
+            calories: 500,
+            servings: 1,
+            vegetarian: true,
             steps: [
                 RecipeStep(
                     step: "1. Preparare la pasta",
@@ -135,8 +133,8 @@ class Model: ObservableObject {
             ingredients: "salsiccia, friarielli",
             numberOfSteps: 4,
             imageName: "pizza",
+            difficulty: "Medium",
             timeToCook: 8,
-            difficulty: "⭐️⭐️⭐️⭐️",
             glutenFree: true,
             steps: [
                 RecipeStep(
