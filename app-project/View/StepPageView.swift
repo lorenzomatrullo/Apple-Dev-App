@@ -173,8 +173,7 @@ struct StepPageView: View {
                         {
                             Text("Time is up!")
                                 .font(.system(size: 40))
-                                .onAppear()
-                                {
+                                .onAppear() {
                                     SpeakMessage(str : "Time is up!", speechSynthesizer: synth)
                                 }
                         }
@@ -252,10 +251,7 @@ struct StepPageView: View {
                 })
                 .onAppear() {
                     // Start
-                    
-                    SpeakMessage(str: "We are at step \(cookingState.currentStep + 1) of \(meal.numberOfSteps).", speechSynthesizer: synth)
-                    
-                    SpeakMessage(str: meal.steps[cookingState.currentStep].description, speechSynthesizer: synth)
+                    SpeakMessage(str: meal.steps[cookingState.currentStep].speakSteps, speechSynthesizer: synth)
                 }
                 .onChange(of: cookingState.currentStep) { newStep in
                                 
@@ -307,6 +303,9 @@ struct StepPage_Previews: PreviewProvider {
                     • Pasta (spaghetti, penne, or your choice)
                     • Grated Parmesan or Pecorino cheese (optional)
                     """,
+                    speakSteps: """
+                    Hello
+                    """,
                     usesTimer: false,
                     timerTime: 0),
                 
@@ -314,6 +313,9 @@ struct StepPage_Previews: PreviewProvider {
                     step: "2. Preparare le patate",
                     imageName: "patate",
                     description: "Place tomatoes in a large pot and cover with cold water. Bring just to a boil. Pour off water, and cover again with cold water. Peel the skin off tomatoes and cut into small pieces.",
+                    speakSteps: """
+                    Hello
+                    """,
                     usesTimer: false,
                     timerTime: 0
                 ),
@@ -322,6 +324,9 @@ struct StepPage_Previews: PreviewProvider {
                     step: "3. Cuocere la pasta",
                     imageName: "pasta",
                     description: "For this step we need a timer, so you can see how long it takes to cook the pasta. Say 'START' when you're ready to cook the pasta.",
+                    speakSteps: """
+                    Hello
+                    """,
                     usesTimer: true,
                     timerTime: 30
                 ),
@@ -330,6 +335,9 @@ struct StepPage_Previews: PreviewProvider {
                     step: "3. Cuocere la pasta",
                     imageName: "pasta",
                     description: "Drain pasta, do not rinse in cold water. Toss with a bit of olive oil, then mix into the sauce.",
+                    speakSteps: """
+                    Hello
+                    """,
                     usesTimer: false,
                     timerTime: 0
                 ),
