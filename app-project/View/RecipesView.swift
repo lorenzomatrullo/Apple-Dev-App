@@ -75,6 +75,7 @@ struct RecipesView: View {
                             .padding(5)
                             .background(.green)
                             .foregroundColor(.white)
+                            .cornerRadius(8)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 8)
                                     .stroke(.black.opacity(0.3), lineWidth: 2)
@@ -88,6 +89,7 @@ struct RecipesView: View {
                             .padding(5)
                             .background(.blue)
                             .foregroundColor(.white)
+                            .cornerRadius(8)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 8)
                                     .stroke(.black.opacity(0.3), lineWidth: 2)
@@ -101,6 +103,7 @@ struct RecipesView: View {
                             .padding(5)
                             .background(.orange)
                             .foregroundColor(.white)
+                            .cornerRadius(8)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 8)
                                     .stroke(.black.opacity(0.3), lineWidth: 2)
