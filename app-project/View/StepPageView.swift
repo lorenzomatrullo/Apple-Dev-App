@@ -223,6 +223,8 @@ struct StepPageView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear() {
             // Start
+            SpeakMessage(str: "We are at step \(cookingState.currentStep + 1) of \(meal.numberOfSteps).", speechSynthesizer: synth)
+            
             SpeakMessage(str: meal.steps[cookingState.currentStep].speakSteps, speechSynthesizer: synth)
         }
         .onChange(of: cookingState.currentStep) { newStep in
