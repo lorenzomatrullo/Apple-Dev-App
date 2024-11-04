@@ -2,6 +2,8 @@ import Foundation
 import SwiftUI
 import AVFoundation
 
+public let synth = AVSpeechSynthesizer()
+
 public var hasToAnnounceHomepage : Bool = false
 
 // Model for a recipe

@@ -7,7 +7,6 @@ struct MealPage: View {
     @State var showPageInvalidMessage = false
     @State var errorMessage = ""
     
-    private let synth = AVSpeechSynthesizer()
     private var meal: RecipesList
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -123,6 +122,7 @@ struct MealPage: View {
         })
         .onAppear {
             hasToAnnounceHomepage = true // If this VStack appears, it means we will have to announce that we're in the homepage if we go back
+            
             // Check if the details have already been spoken
             if !hasSpokenDetails {
                 speakRecipeDetails()
@@ -131,6 +131,9 @@ struct MealPage: View {
     }
 
     private func speakRecipeDetails() {
+        
+        synth.stopSpeaking(at: .immediate)
+        
         // Determine if the meal is vegetarian
         let vegetarianStatus = meal.vegetarian ? "This meal is vegetarian." : "This meal is not vegetarian."
 

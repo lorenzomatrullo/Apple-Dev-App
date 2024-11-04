@@ -5,7 +5,6 @@ import AVFoundation
 struct FirstPageView: View {
     @EnvironmentObject var model: Model
     
-    private let speechSynthesizer = AVSpeechSynthesizer()
     @State private var hasSpokenWelcomeMessage = false
 
     var body: some View {
@@ -26,7 +25,7 @@ struct FirstPageView: View {
                 trailing: HStack {
                     // Help Button
                     Button(action: {
-                        HelpButtonPressed(status: HelpButtonState.HOME_PAGE, synth: speechSynthesizer, meal: nil, cookingState: nil)                    }) {
+                        HelpButtonPressed(status: HelpButtonState.HOME_PAGE, synth: synth, meal: nil, cookingState: nil)                    }) {
                         Text("?")
                             .font(.title)
                             .foregroundColor(.white)
@@ -58,11 +57,14 @@ struct FirstPageView: View {
             .onAppear {
                 if(hasToAnnounceHomepage)
                 {
-                    SpeakMessage(str: "We are back on the homepage!", speechSynthesizer: speechSynthesizer)
+                    synth.stopSpeaking(at: .immediate)
+
+                    SpeakMessage(str: "We are back on the homepage!", speechSynthesizer: synth)
                     
                     // Remember the user what it can do
                     let commandMessage = "To get started with a recipe, you can just say 'tap' followed by the recipe name, like 'tap tomato pasta'. Or 'tap salad'."
-                    SpeakMessage(str: commandMessage, speechSynthesizer: speechSynthesizer)
+                    
+                    SpeakMessage(str: commandMessage, speechSynthesizer: synth)
                     
                     hasToAnnounceHomepage = false
                 }
@@ -87,14 +89,14 @@ struct FirstPageView: View {
             
             let welcomeMessage = "Welcome to TasteEcho, let's explore delicious recipes. You can choose between: \(formattedRecipeNames)."
             
-            SpeakMessage(str: welcomeMessage, speechSynthesizer: speechSynthesizer)
+            SpeakMessage(str: welcomeMessage, speechSynthesizer: synth)
             
             // Add message about using voice commands
             let commandMessage = "To get started with a recipe, you can just say 'tap' followed by the recipe name, like 'tap tomato pasta'. Or 'tap salad'."
-            SpeakMessage(str: commandMessage, speechSynthesizer: speechSynthesizer)
+            SpeakMessage(str: commandMessage, speechSynthesizer: synth)
             
             let helpMsg = "Remember you can alway say 'Tap Repeat', to make me repeat the instructions. Or you can say 'Tap Help' to get help on the page you're currently in."
-            SpeakMessage(str: helpMsg, speechSynthesizer: speechSynthesizer)
+            SpeakMessage(str: helpMsg, speechSynthesizer: synth)
 
             hasSpokenWelcomeMessage = true
         }

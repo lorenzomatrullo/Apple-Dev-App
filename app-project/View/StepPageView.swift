@@ -16,8 +16,6 @@ struct StepPageView: View {
     @State var repeatTimeInterval : Int = 5
     @State var repeatTimeCount: Int = 0
     
-    public let synth = AVSpeechSynthesizer()
-
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -27,6 +25,7 @@ struct StepPageView: View {
     
     init(_ meal: RecipesList) {
         self.meal = meal
+        cookingState.currentStep = 0
     }
     
     var body: some View {
@@ -42,6 +41,7 @@ struct StepPageView: View {
                 .scaledToFit()
                 .frame(width: 175, height: 175)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
+        
             
             // Add some space
             Spacer().frame(height: 20)
@@ -219,7 +219,7 @@ struct StepPageView: View {
             }
         }
         .padding()
-        .navigationTitle("")
+        .navigationTitle("Step Page")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(trailing: HStack {
             // Help Button
@@ -255,12 +255,15 @@ struct StepPageView: View {
             .accessibilityLabel("Repeat")
         })
         .onAppear() {
-            // Start
-            SpeakMessage(str: "We are at step \(cookingState.currentStep + 1) of \(meal.numberOfSteps).", speechSynthesizer: synth)
             
-            SpeakMessage(str: meal.steps[cookingState.currentStep].speakSteps, speechSynthesizer: synth)
+            synth.stopSpeaking(at: .immediate)
+
+            // Start
+            SpeakMessage(str: "We are at step \(cookingState.currentStep + 1) of \(meal.numberOfSteps). " + meal.steps[cookingState.currentStep].speakSteps, speechSynthesizer: synth)
         }
         .onChange(of: cookingState.currentStep) { newStep in
+            synth.stopSpeaking(at: .immediate)
+
             SpeakMessage(str: "We are at step \(cookingState.currentStep + 1) of \(meal.numberOfSteps).", speechSynthesizer: synth)
             
             SpeakMessage(str: meal.steps[cookingState.currentStep].speakSteps, speechSynthesizer: synth)
