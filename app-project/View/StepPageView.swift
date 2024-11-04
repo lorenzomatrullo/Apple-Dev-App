@@ -219,7 +219,7 @@ struct StepPageView: View {
             }
         }
         .padding()
-        .navigationTitle("Step Page")
+        .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(trailing: HStack {
             // Help Button
