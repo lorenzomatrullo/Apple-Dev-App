@@ -5,7 +5,7 @@ struct AlertView: View {
     
     @State private var isShowingAlert = false
     @State private var navigateToFirstPage = false
-    
+
     var body: some View {
         VStack {
             // Only show the button if we are not navigating to FirstPageView
@@ -32,12 +32,10 @@ struct AlertView: View {
             isShowingAlert = true // Show the alert when the view appears
             
             let authMessage = "Enable voice control to continue using the app. If you don't have it enabled yet, just say 'Hey Siri, enable voice control'. After that just say 'Tap Ok'"
-            
             SpeakMessage(str: authMessage, speechSynthesizer: synth)
         }
     }
 }
-
 
 #Preview {
     AlertView()

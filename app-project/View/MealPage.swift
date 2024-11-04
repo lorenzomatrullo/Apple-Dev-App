@@ -20,108 +20,19 @@ struct MealPage: View {
         VStack {
             Form {
                 RecipesView(meal)
-
-                VStack(alignment: .leading) {
-                    HStack {
-                        Text("TIME:")
-                            .font(.headline)
-                            .foregroundColor(.primary)
-                        
-                        Spacer()
-                        
-                        Text("\(meal.timeToCook) minutes")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                    }
-                    
-                    HStack {
-                        Text("CALORIES:")
-                            .font(.headline)
-                        
-                        Spacer()
-                        
-                        Text("\(meal.calories) kcal")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                    }
-                    
-                    HStack {
-                        Text("SERVINGS:")
-                            .font(.headline)
-                        
-                        Spacer()
-                        
-                        Text("\(meal.servings)")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                    }
-                }
-                .padding(.top, 10)
                 
-                Section(header: Text("Ingredients")
-                    .font(.headline)
-                    .foregroundColor(.primary)
-                ) {
-                    // Split the ingredients string into an array
-                    let ingredientsList = meal.ingredients.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }
-                    
-                    ForEach(ingredientsList, id: \.self) { ingredient in
-                        HStack {
-                            Text(ingredient)
-                                .font(.subheadline)
-                            Spacer()
-                        }
-                    }
-                }
+                mealDetailsSection
+                
+                ingredientsSection
             }
             
-            NavigationLink(destination: StepPageView(meal)) {
-                Text("START")
-                    .font(.system(size: 25))
-                    .bold()
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 5)
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
-            }
-            .buttonStyle(.borderedProminent)
+            startButton
         }
         .navigationTitle("Meal Page")
         .navigationBarTitleDisplayMode(.inline)
-        .navigationBarItems(trailing: HStack {
-            // Help Button
-            Button(action: {
-                HelpButtonPressed(status: HelpButtonState.MEAL_PAGE, synth: synth, meal: meal, cookingState: nil)
-            }) {
-                Text("?")
-                    .font(.title)
-                    .foregroundColor(.white)
-                    .frame(width: 44, height: 44)
-                    .background(Color.red)
-                    .clipShape(Circle())
-                    .shadow(radius: 5)
-                    .opacity(0)
-            }
-            .accessibilityLabel("Help")
-
-            // Repeat button
-            Button(action: {
-                speakRecipeDetails()
-            }) {
-                Text("Repeat")
-                    .font(.title)
-                    .foregroundColor(.white)
-                    .frame(width: 44, height: 44)
-                    .background(Color.blue)
-                    .clipShape(Circle())
-                    .shadow(radius: 5)
-                    .opacity(0)
-            }
-            .accessibilityLabel("Repeat")
-        })
+        .navigationBarItems(trailing: navigationButtons)
         .onAppear {
-            hasToAnnounceHomepage = true // If this VStack appears, it means we will have to announce that we're in the homepage if we go back
+            hasToAnnounceHomepage = true
             
             // Check if the details have already been spoken
             if !hasSpokenDetails {
@@ -129,9 +40,102 @@ struct MealPage: View {
             }
         }
     }
+    
+    private var mealDetailsSection: some View {
+        VStack(alignment: .leading) {
+            detailRow(title: "TIME:", value: "\(meal.timeToCook) minutes")
+            detailRow(title: "CALORIES:", value: "\(meal.calories) kcal")
+            detailRow(title: "SERVINGS:", value: "\(meal.servings)")
+        }
+        .padding(.top, 10)
+    }
+    
+    private func detailRow(title: String, value: String) -> some View {
+        HStack {
+            Text(title)
+                .font(.headline)
+                .foregroundColor(.primary)
+            
+            Spacer()
+            
+            Text(value)
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+        }
+    }
+    
+    private var ingredientsSection: some View {
+        Section(header: Text("Ingredients")
+            .font(.headline)
+            .foregroundColor(.primary)
+        ) {
+            // Split the ingredients string into an array
+            let ingredientsList = meal.ingredients.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }
+            
+            ForEach(ingredientsList, id: \.self) { ingredient in
+                HStack {
+                    Text(ingredient)
+                        .font(.subheadline)
+                    Spacer()
+                }
+            }
+        }
+    }
+    
+    private var startButton: some View {
+        NavigationLink(destination: StepPageView(meal)) {
+            Text("START")
+                .font(.system(size: 25))
+                .bold()
+                .padding(.horizontal, 20)
+                .padding(.vertical, 5)
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(8)
+        }
+        .buttonStyle(.borderedProminent)
+    }
+    
+    private var navigationButtons: some View {
+        HStack {
+            helpButton
+            repeatButton
+        }
+    }
+    
+    private var helpButton: some View {
+        Button(action: {
+            HelpButtonPressed(status: HelpButtonState.MEAL_PAGE, synth: synth, meal: meal, cookingState: nil)
+        }) {
+            Text("?")
+                .font(.title)
+                .foregroundColor(.white)
+                .frame(width: 44, height: 44)
+                .background(Color.red)
+                .clipShape(Circle())
+                .shadow(radius: 5)
+                .opacity(0) // Adjust opacity as needed
+        }
+        .accessibilityLabel("Help")
+    }
+    
+    private var repeatButton: some View {
+        Button(action: {
+            speakRecipeDetails()
+        }) {
+            Text("Repeat")
+                .font(.title)
+                .foregroundColor(.white)
+                .frame(width: 44, height: 44)
+                .background(Color.blue)
+                .clipShape(Circle())
+                .shadow(radius: 5)
+                .opacity(0) // Adjust opacity as needed
+        }
+        .accessibilityLabel("Repeat")
+    }
 
     private func speakRecipeDetails() {
-        
         synth.stopSpeaking(at: .immediate)
         
         // Determine if the meal is vegetarian
@@ -156,3 +160,4 @@ struct MealPage: View {
         hasSpokenDetails = true
     }
 }
+
