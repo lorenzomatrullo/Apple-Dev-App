@@ -107,7 +107,7 @@ struct StepPageView: View {
                                     .background(Color.blue.opacity(0.7))
                                     .foregroundColor(.white)
                                     .cornerRadius(5)
-                            }
+                            }.accessibilityInputLabels(["start the timer, start, start timer"])
                         } else if(timerStarted && isTimerRunning && !isTimeUp) {
                             Button {
                                 isTimerRunning = false
