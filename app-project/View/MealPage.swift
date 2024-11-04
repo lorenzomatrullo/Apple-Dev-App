@@ -90,21 +90,37 @@ struct MealPage: View {
         }
         .navigationTitle("Meal Page")
         .navigationBarTitleDisplayMode(.inline)
-        .navigationBarItems(trailing: Button(action: {
-                            // Action for the help button
-                            HelpButtonPressed(status: HelpButtonState.MEAL_PAGE, synth: synth, meal: meal, cookingState: nil)
-                        }) {
-                            Text("?")
-                                .font(.title)
-                                .foregroundColor(.white)
-                                .frame(width: 44, height: 44) // Size of the button
-                                .background(Color.red)
-                                .clipShape(Circle()) // Makes the button circular
-                                .shadow(radius: 5) // Optional shadow
-                                .opacity(0)
-                        }
-                        .accessibilityLabel("Help")
-        )
+        .navigationBarItems(trailing: HStack {
+            // Help Button
+            Button(action: {
+                HelpButtonPressed(status: HelpButtonState.MEAL_PAGE, synth: synth, meal: meal, cookingState: nil)
+            }) {
+                Text("?")
+                    .font(.title)
+                    .foregroundColor(.white)
+                    .frame(width: 44, height: 44)
+                    .background(Color.red)
+                    .clipShape(Circle())
+                    .shadow(radius: 5)
+                    .opacity(0)
+            }
+            .accessibilityLabel("Help")
+
+            // Repeat button
+            Button(action: {
+                speakRecipeDetails()
+            }) {
+                Text("Repeat")
+                    .font(.title)
+                    .foregroundColor(.white)
+                    .frame(width: 44, height: 44)
+                    .background(Color.blue)
+                    .clipShape(Circle())
+                    .shadow(radius: 5)
+                    .opacity(0)
+            }
+            .accessibilityLabel("Repeat")
+        })
         .onAppear {
             hasToAnnounceHomepage = true // If this VStack appears, it means we will have to announce that we're in the homepage if we go back
             // Check if the details have already been spoken
@@ -127,7 +143,8 @@ struct MealPage: View {
         Calories: \(meal.calories) kcal,
         Servings: \(meal.servings).
         Ingredients: \(meal.ingredients).
-        If you wish to hear the ingredients again, just say "repeat the ingredients."
+        If you wish to hear the description again, just say "Tap Repeat".
+        Otherwise, if you wish to start cooking, say "Tap Start".
         """
         SpeakMessage(str: detailsMessage, speechSynthesizer: synth)
         
