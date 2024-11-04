@@ -14,7 +14,7 @@ struct FirstPageView: View {
                 ForEach(self.model.meal, id: \.self) { item in
                     NavigationLink(destination: MealPage(item)) {
                         RecipesView(item)
-                    }
+                    }.accessibilityLabel(item.recipeName)
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
