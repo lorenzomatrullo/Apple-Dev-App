@@ -227,7 +227,8 @@ struct StepPageView: View {
         }
         .onChange(of: cookingState.currentStep) { newStep in
             SpeakMessage(str: "We are at step \(cookingState.currentStep + 1) of \(meal.numberOfSteps).", speechSynthesizer: synth)
-            SpeakMessage(str: meal.steps[cookingState.currentStep].description, speechSynthesizer: synth)
+            
+            SpeakMessage(str: meal.steps[cookingState.currentStep].speakSteps, speechSynthesizer: synth)
             
             if meal.steps[newStep].usesTimer {
                 timeRemaining = meal.steps[newStep].timerTime

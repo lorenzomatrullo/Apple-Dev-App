@@ -77,7 +77,8 @@ class Model: ObservableObject {
                 RecipeStep(
                     step: "1. Boil the water",
                     imageName: "pasta",
-                    description: """
+                    description: "Let's begin with the Tomato Pasta Recipe!",
+                    speakSteps: """
                     Let’s begin with the Tomato Pasta Recipe.
 
                     Choose a pot that is appropriate for the amount of water you want to boil.
@@ -88,7 +89,6 @@ class Model: ObservableObject {
                     
                     When you are ready, say ‘Tap Next Step’.’
                     """,
-                    speakSteps: "",
                     usesTimer: false,
                     timerTime: 0
                 ),
@@ -96,7 +96,8 @@ class Model: ObservableObject {
                 RecipeStep(
                     step: "2. Cook the pasta",
                     imageName: "patate",
-                    description: """
+                    description: "Now we cook the pasta.",
+                    speakSteps: """
                     Now that the water is boiling, let’s cook the pasta. Pennette Pasta will take 10 minutes to cook, I will help you with a Timer.
                     
                     Take 80g of pennette pasta and carefully put it into the water.
@@ -105,7 +106,6 @@ class Model: ObservableObject {
                     
                     I will update you every minute with the time left. 
                     """,
-                    speakSteps: "",
                     usesTimer: true,
                     timerTime: 600
                 ),
@@ -113,12 +113,12 @@ class Model: ObservableObject {
                 RecipeStep(
                     step: "3. Drain the pasta",
                     imageName: "pasta",
-                    description: """
+                    description: "Now it's time to drain the pasta.",
+                    speakSteps: """
                     Now it’s time to drain the pasta! You can use a colander to do it and you can put the pasta on the side, we will need it later. 
                     
                     Once you’ve done it, say ‘Tap Next Step’ to move onto the next step.
                     """,
-                    speakSteps: "",
                     usesTimer: false,
                     timerTime: 0
                 ),
@@ -126,12 +126,12 @@ class Model: ObservableObject {
                 RecipeStep(
                     step: "4. Start preparing the Tomato Sauce",
                     imageName: "pasta",
-                    description: """
+                    description: "Let's get the Tomato Sauce ready.",
+                    speakSteps: """
                     Now it’s time to prepare the Tomato Sauce. We will need a large pan, so let’s carefully put it on the stove without opening the heat yet. 
                     
                     When you did, say ‘Tap Next Step’ to continue.
                     """,
-                    speakSteps: "",
                     usesTimer: false,
                     timerTime: 0
                 ),
@@ -139,12 +139,12 @@ class Model: ObservableObject {
                 RecipeStep(
                     step: "5. Start preparing the Tomato Sauce",
                     imageName: "pasta",
-                    description: """
+                    description: "Let's continue with the Tomato Sauce.",
+                    speakSteps: """
                     You can now add a tablespoon of olive oil and one clove of garlic in the pan. You can cut the garlic into smaller pieces if you wish.
                     
                     When you’re ready to move on the next step, say ‘Tap Next Step’.
                     """,
-                    speakSteps: "",
                     usesTimer: false,
                     timerTime: 0
                 ),
@@ -152,12 +152,12 @@ class Model: ObservableObject {
                 RecipeStep(
                     step: "6. Start preparing the Tomato Sauce",
                     imageName: "pasta",
-                    description: """
+                    description: "Let's cook the Tomato Sauce for 2 minutes!",
+                    speakSteps: """
                     When the olive oil and garlic is in the pan, let’s set the burner to medium heat and wait for the olive oil to get hot. I will help you with a Timer of 2 minutes.
                     
                     You can say ‘Tap Start Timer’ to start it. I will update you every minute.
                     """,
-                    speakSteps: "",
                     usesTimer: true,
                     timerTime: 120
                 ),
@@ -165,12 +165,12 @@ class Model: ObservableObject {
                 RecipeStep(
                     step: "7. Start preparing the Tomato Sauce",
                     imageName: "pasta",
-                    description: """
+                    description: "Now it's time to add the tomatoes in the pan!",
+                    speakSteps: """
                     Now that the oil is hot, let’s add fresh tomatoes in the pan. You can cut each one of them in 3-4 slices if you prefer.
                     
                     Once you did it, say ‘Tap Next Step’ to move onto the next step.
                     """,
-                    speakSteps: "",
                     usesTimer: false,
                     timerTime: 0
                 ),
@@ -178,12 +178,12 @@ class Model: ObservableObject {
                 RecipeStep(
                     step: "8. Mixing and cooking the tomato",
                     imageName: "pasta",
-                    description: """
+                    description: "Time to wait for the tomato to cook!",
+                    speakSteps: """
                     Now it’s time to wait for the tomato to cook! I will help you with a 3 minutes Timer.
                     
                     When you’re ready, say ‘Tap Start Timer’. I will update you every minute. When I do, you can gently mix the tomatoes in the pan.
                     """,
-                    speakSteps: "",
                     usesTimer: true,
                     timerTime: 180
                 ),
@@ -191,14 +191,14 @@ class Model: ObservableObject {
                 RecipeStep(
                     step: "9. Putting the pasta in",
                     imageName: "pasta",
-                    description: """
+                    description: "Adding in the pasta!",
+                    speakSteps: """
                     While the burner is still going, let’s add the pasta in the pan and gently mixing it with the tomatoes.
                     I will help you with a 2 minute timer, it will be enough for the tomato sauce to mix with the pasta and for the pasta to heat up again.
                     
                     When you’re ready, say ‘Tap Start Timer’. 
                     I will update you every minute. Whenever I update you, you can give it a gentle mix.
                     """,
-                    speakSteps: "",
                     usesTimer: true,
                     timerTime: 120
                 ),
@@ -206,12 +206,12 @@ class Model: ObservableObject {
                 RecipeStep(
                     step: "10. Putting the pasta in",
                     imageName: "pasta",
-                    description: """
+                    description: "Time to plate!",
+                    speakSteps: """
                     We’re done! We can now add few basil leaves as a final touch, then, you can put the pasta in a plate and enjoy it!
                     
                     Say ‘Complete Recipe’ to finish the process!
                     """,
-                    speakSteps: "",
                     usesTimer: false,
                     timerTime: 0
                 ),
