@@ -321,13 +321,13 @@ public func HelpButtonPressed(status : HelpButtonState, synth: AVSpeechSynthesiz
     switch(status)
     {
         case HelpButtonState.HOME_PAGE:
-        SpeakMessage(str: "You are currently in the 'Home Page', you can select an option between: 'Pasta', 'Pizza', to have more details on the Recipe.", speechSynthesizer: synth)
+        SpeakMessage(str: "You are currently in the 'Home Page', you can say 'Tap Tomato Pasta', or 'Tap Salad', to get more information about the recipe.", speechSynthesizer: synth)
         break
 
         case HelpButtonState.MEAL_PAGE:
         if let meal = meal {
             // Use meal safely here
-            SpeakMessage(str: "You are currently in the 'Meal Page' and you're viewing the recipe for \(meal.recipeName). You can say 'Read again', to read the recipe again. You can say 'Start', to start cooking the recipe. You can say 'Back', to go back to the 'Home Page'.", speechSynthesizer: synth)
+            SpeakMessage(str: "You are currently in the 'Meal Page' and you're viewing the recipe for \(meal.recipeName). You can say 'Tap Repeat', to read the recipe again. You can say 'Tap Start', to start cooking the recipe. You can say 'Tap Back', to go back to the 'Home Page'.", speechSynthesizer: synth)
             }
             else {
                 debugPrint("Meal is nil")
@@ -338,7 +338,7 @@ public func HelpButtonPressed(status : HelpButtonState, synth: AVSpeechSynthesiz
         case HelpButtonState.STEP_PAGE:
         if let meal = meal, let cookingState = cookingState {
             // Use meal and cookingState safely here
-            SpeakMessage(str: "You are currently in the 'Step Page' for. \(meal.recipeName). You are at Step \(cookingState.currentStep+1) out of \(meal.numberOfSteps). You can say 'Read again', to read the step again. You can say 'Next', to go to the next step. You can say 'Previous', to go on the previous step.", speechSynthesizer: synth)
+            SpeakMessage(str: "You are currently in the 'Step Page' for. \(meal.recipeName). You are at Step \(cookingState.currentStep+1) out of \(meal.numberOfSteps). You can say 'Tap Repeat', to read the step again. You can say 'Tap Next', to go to the next step. You can say 'Tap Previous', to go on the previous step. You can say 'Tap Exit' to stop cooking.", speechSynthesizer: synth)
         }
         else {
             debugPrint("Meal or cookingState is nil")

@@ -221,21 +221,39 @@ struct StepPageView: View {
         .padding()
         .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
-        .navigationBarItems(trailing: Button(action: {
-                            // Action for the help button
-                            HelpButtonPressed(status: HelpButtonState.MEAL_PAGE, synth: synth, meal: meal, cookingState: nil)
-                        }) {
-                            Text("?")
-                                .font(.title)
-                                .foregroundColor(.white)
-                                .frame(width: 44, height: 44) // Size of the button
-                                .background(Color.red)
-                                .clipShape(Circle()) // Makes the button circular
-                                .shadow(radius: 5) // Optional shadow
-                                .opacity(0)
-                        }
-                        .accessibilityLabel("Help")
-        )
+        .navigationBarItems(trailing: HStack {
+            // Help Button
+            Button(action: {
+                HelpButtonPressed(status: HelpButtonState.MEAL_PAGE, synth: synth, meal: meal, cookingState: nil)
+            }) {
+                Text("?")
+                    .font(.title)
+                    .foregroundColor(.white)
+                    .frame(width: 44, height: 44)
+                    .background(Color.red)
+                    .clipShape(Circle())
+                    .shadow(radius: 5)
+                    .opacity(0)
+            }
+            .accessibilityLabel("Help")
+
+            // Repeat button
+            Button(action: {
+                SpeakMessage(str: "We are at step \(cookingState.currentStep + 1) of \(meal.numberOfSteps).", speechSynthesizer: synth)
+                
+                SpeakMessage(str: meal.steps[cookingState.currentStep].speakSteps, speechSynthesizer: synth)
+            }) {
+                Text("Repeat")
+                    .font(.title)
+                    .foregroundColor(.white)
+                    .frame(width: 44, height: 44)
+                    .background(Color.blue)
+                    .clipShape(Circle())
+                    .shadow(radius: 5)
+                    .opacity(0)
+            }
+            .accessibilityLabel("Repeat")
+        })
         .onAppear() {
             // Start
             SpeakMessage(str: "We are at step \(cookingState.currentStep + 1) of \(meal.numberOfSteps).", speechSynthesizer: synth)
