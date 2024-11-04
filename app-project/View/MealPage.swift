@@ -145,6 +145,7 @@ struct MealPage: View {
         Ingredients: \(meal.ingredients).
         If you wish to hear the description again, just say "Tap Repeat".
         Otherwise, if you wish to start cooking, say "Tap Start".
+        If you want to select another recipe, say "Tap Back".
         """
         SpeakMessage(str: detailsMessage, speechSynthesizer: synth)
         
