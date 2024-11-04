@@ -2,6 +2,8 @@ import Foundation
 import SwiftUI
 import AVFoundation
 
+public var hasToAnnounceHomepage : Bool = false
+
 // Model for a recipe
 public struct RecipesList: Hashable {
     let recipeName: String
@@ -291,7 +293,7 @@ class Model: ObservableObject {
     @Published var mealPage = MealPageModel()
     @Published var displayingMealPage = false
     @Published var followNavigationLink = false
-    
+        
     @Published var displayTabBar = true
     @Published var tabBarChanged = true
     @Published var tabViewSelectedIndex = Int.max {

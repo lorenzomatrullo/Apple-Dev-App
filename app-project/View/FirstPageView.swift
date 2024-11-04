@@ -39,6 +39,12 @@ struct FirstPageView: View {
                                 .accessibilityLabel("Help")
             )
             .onAppear {
+                if(hasToAnnounceHomepage)
+                {
+                    SpeakMessage(str: "We are back on the homepage!", speechSynthesizer: speechSynthesizer)
+                    hasToAnnounceHomepage = false
+                }
+                
                 if !hasSpokenWelcomeMessage {
                     // Create a welcome message with the recipe names
                     var recipeNames = model.meal.map { $0.recipeName }

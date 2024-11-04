@@ -12,7 +12,7 @@ struct MealPage: View {
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var hasSpokenDetails = false // State variable to track spoken status
-
+    
     init(_ meal: RecipesList) {
         self.meal = meal
     }
@@ -106,6 +106,7 @@ struct MealPage: View {
                         .accessibilityLabel("Help")
         )
         .onAppear {
+            hasToAnnounceHomepage = true // If this VStack appears, it means we will have to announce that we're in the homepage if we go back
             // Check if the details have already been spoken
             if !hasSpokenDetails {
                 speakRecipeDetails()
