@@ -7,7 +7,7 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            FirstPageView()
+            AlertView()
         }.environmentObject(model)
     }
 }
