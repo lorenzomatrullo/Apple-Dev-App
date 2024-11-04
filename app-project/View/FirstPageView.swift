@@ -34,10 +34,9 @@ struct FirstPageView: View {
                                         .background(Color.red)
                                         .clipShape(Circle()) // Makes the button circular
                                         .shadow(radius: 5) // Optional shadow
+                                        .opacity(0)
                                 }
                                 .accessibilityLabel("Help")
-
-                
             )
             .onAppear {
                 if !hasSpokenWelcomeMessage {
