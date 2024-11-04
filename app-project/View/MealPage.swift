@@ -11,6 +11,7 @@ struct MealPage: View {
     private var meal: RecipesList
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @State private var hasSpokenDetails = false // State variable to track spoken status
 
     init(_ meal: RecipesList) {
         self.meal = meal
@@ -40,7 +41,7 @@ struct MealPage: View {
                         
                         Spacer()
                         
-                        Text("\(meal.calories)kcal")
+                        Text("\(meal.calories) kcal")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                     }
@@ -89,5 +90,32 @@ struct MealPage: View {
         }
         .navigationTitle("Meal Page")
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            // Check if the details have already been spoken
+            if !hasSpokenDetails {
+                speakRecipeDetails()
+            }
+        }
+    }
+
+    private func speakRecipeDetails() {
+        // Determine if the meal is vegetarian
+        let vegetarianStatus = meal.vegetarian ? "This meal is vegetarian." : "This meal is not vegetarian."
+
+        // Speak the details of the chosen recipe
+        let detailsMessage = """
+        \(vegetarianStatus)
+        Here are the details for \(meal.recipeName):
+        Difficulty: \(meal.difficulty),
+        Time: \(meal.timeToCook) minutes,
+        Calories: \(meal.calories) kcal,
+        Servings: \(meal.servings).
+        Ingredients: \(meal.ingredients).
+        If you wish to hear the ingredients again, just say "repeat the ingredients."
+        """
+        SpeakMessage(str: detailsMessage, speechSynthesizer: synth)
+        
+        // Set the flag to true after speaking
+        hasSpokenDetails = true
     }
 }
