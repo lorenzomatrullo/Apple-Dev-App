@@ -219,7 +219,7 @@ class Model: ObservableObject {
         ),
         
         RecipesList(
-            recipeName: "Pizza Salsiccia e Friarielli",
+            recipeName: "Salad",
             ingredients: "salsiccia, friarielli",
             numberOfSteps: 4,
             imageName: "pizza",
