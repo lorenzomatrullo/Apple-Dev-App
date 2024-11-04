@@ -208,7 +208,7 @@ struct StepPageView: View {
         .padding()
         .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
-        .navigationBarBackButtonHidden()
+        //.navigationBarBackButtonHidden() to hide the back button
         .navigationBarItems(trailing: HStack {
             // Help Button
             Button(action: {
