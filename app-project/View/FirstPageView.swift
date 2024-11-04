@@ -22,7 +22,22 @@ struct FirstPageView: View {
                 leading: Text("Recipes")
                     .font(.title)
                     .bold()
-                    .padding(.top, 15)
+                    .padding(.top, 15),
+                trailing: Button(action: {
+                                    // Action for the help button
+                                    HelpButtonPressed(status: HelpButtonState.HOME_PAGE, synth: speechSynthesizer, meal: nil, cookingState: nil)
+                                }) {
+                                    Text("?")
+                                        .font(.title)
+                                        .foregroundColor(.white)
+                                        .frame(width: 44, height: 44) // Size of the button
+                                        .background(Color.red)
+                                        .clipShape(Circle()) // Makes the button circular
+                                        .shadow(radius: 5) // Optional shadow
+                                }
+                                .accessibilityLabel("Help")
+
+                
             )
             .onAppear {
                 if !hasSpokenWelcomeMessage {
