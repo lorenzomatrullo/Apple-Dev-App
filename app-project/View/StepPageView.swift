@@ -16,6 +16,8 @@ struct StepPageView: View {
     @State var repeatTimeInterval : Int = 5
     @State var repeatTimeCount: Int = 0
     
+    @State var introSpoken: Bool = false           // if timer is up
+
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -256,10 +258,14 @@ struct StepPageView: View {
         })
         .onAppear() {
             
-            synth.stopSpeaking(at: .immediate)
-
-            // Start
-            SpeakMessage(str: "We are at step \(cookingState.currentStep + 1) of \(meal.numberOfSteps). " + meal.steps[cookingState.currentStep].speakSteps, speechSynthesizer: synth)
+            if(!introSpoken) {
+                synth.stopSpeaking(at: .immediate)
+                
+                // Start
+                SpeakMessage(str: "We are at step \(cookingState.currentStep + 1) of \(meal.numberOfSteps). " + meal.steps[cookingState.currentStep].speakSteps, speechSynthesizer: synth)
+                
+                introSpoken = true
+            }
         }
         .onChange(of: cookingState.currentStep) { newStep in
             synth.stopSpeaking(at: .immediate)
