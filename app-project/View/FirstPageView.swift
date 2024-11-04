@@ -8,7 +8,6 @@ struct FirstPageView: View {
     private let speechSynthesizer = AVSpeechSynthesizer()
     @State private var hasSpokenWelcomeMessage = false
 
-    
     var body: some View {
         NavigationView {
             List {
@@ -23,19 +22,7 @@ struct FirstPageView: View {
                 leading: Text("Recipes")
                     .font(.title)
                     .bold()
-                    .padding(.top, 15),
-                trailing: Button(action: {
-                    // Action for the help button
-                    HelpButtonPressed(status: HelpButtonState.HOME_PAGE, synth: speechSynthesizer, meal: nil, cookingState: nil)
-                }) {
-                    Text("?")
-                        .font(.title)
-                        .foregroundColor(.white)
-                        .frame(width: 44, height: 44) // Size of the button
-                        .background(Color.red)
-                        .clipShape(Circle()) // Makes the button circular
-                        .shadow(radius: 5) // Optional shadow
-                }
+                    .padding(.top, 15)
             )
             .onAppear {
                 if !hasSpokenWelcomeMessage {
@@ -44,9 +31,6 @@ struct FirstPageView: View {
                     hasSpokenWelcomeMessage = true
                 }
             }
-            
-            //.padding(.top, 30) // this moves the recipes
-            //.background(Color(red: 242/255, green: 242/255, blue: 247/255))
         }
     }
 }

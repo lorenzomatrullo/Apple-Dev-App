@@ -25,15 +25,12 @@ struct StepPageView: View {
     // Keep track of the current progress
     @State private var cookingState = CookingState(currentStep: 0)
     
-
     init(_ meal: RecipesList) {
         self.meal = meal
     }
     
-    
     var body: some View {
         VStack(alignment: .center) {
-            
             Text(meal.recipeName)
                 .font(.title)
                 .bold()
@@ -45,8 +42,7 @@ struct StepPageView: View {
                 .scaledToFit()
                 .frame(width: 175, height: 175)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
-                
-
+            
             // Add some space
             Spacer().frame(height: 20)
                 
@@ -68,7 +64,6 @@ struct StepPageView: View {
                         Text(FormatTimeRemaining(timeRemaining))
                             .onReceive(timer) { _ in
                                 if timerStarted && isTimerRunning && timeRemaining > 0 {
-                                    
                                     // Timer decrement
                                     timeRemaining -= 1
                                     
@@ -78,8 +73,7 @@ struct StepPageView: View {
                                     if(timeRemaining == 0){
                                         isTimeUp = true
                                     }
-                                    else
-                                    {
+                                    else {
                                         if(repeatTimeCount >= repeatTimeInterval) {
                                             // Read the time left aloud
                                             let remainingMinutes = timeRemaining / 60
@@ -87,11 +81,9 @@ struct StepPageView: View {
                                             
                                             if(remainingMinutes > 0) {
                                                 SpeakMessage(str: "Time left: \(remainingMinutes) minutes and \(remainingSeconds) seconds", speechSynthesizer: synth)
-                                            }
-                                            else {
+                                            } else {
                                                 SpeakMessage(str: "Time left: \(remainingSeconds) seconds", speechSynthesizer: synth)
                                             }
-                                                
                                             
                                             repeatTimeCount = 0;
                                         }
@@ -101,7 +93,7 @@ struct StepPageView: View {
                             .foregroundColor(.blue)
                             .font(.system(size: 60)) // Set to desired size
                         
-                        // only if timer hasn't started, show the start button
+                        // Only if timer hasn't started, show the start button
                         if(!timerStarted && !isTimeUp) {
                             Button {
                                 timerStarted = true
@@ -109,30 +101,28 @@ struct StepPageView: View {
                                 SpeakMessage(str: "Timer started!", speechSynthesizer: synth)
                             } label: {
                                 Text("Start!")
-                                    .padding(.horizontal, 10) // Adjust horizontal padding
-                                    .padding(.vertical, 5)     // Adjust vertical padding
-                                    .font(.body)               // Change font size if needed
+                                    .padding(.horizontal, 10)
+                                    .padding(.vertical, 5)
+                                    .font(.body)
                                     .background(Color.blue.opacity(0.7))
-                                    .foregroundColor(.white) // Change text color if needed
+                                    .foregroundColor(.white)
                                     .cornerRadius(5)
                             }
-                        }
-                        else if(timerStarted && isTimerRunning && !isTimeUp) {
+                        } else if(timerStarted && isTimerRunning && !isTimeUp) {
                             Button {
                                 isTimerRunning = false
                                 isTimerPaused = true
                                 SpeakMessage(str: "Timer paused!", speechSynthesizer: synth)
                             } label: {
                                 Text("Pause")
-                                    .padding(.horizontal, 10) // Adjust horizontal padding
-                                    .padding(.vertical, 5)     // Adjust vertical padding
-                                    .font(.body)               // Change font size if needed
+                                    .padding(.horizontal, 10)
+                                    .padding(.vertical, 5)
+                                    .font(.body)
                                     .background(Color.red.opacity(0.7))
-                                    .foregroundColor(.white) // Change text color if needed
+                                    .foregroundColor(.white)
                                     .cornerRadius(5)
                             }
-                        }
-                        else if(timerStarted && isTimerPaused) {
+                        } else if(timerStarted && isTimerPaused) {
                             HStack {
                                 Button {
                                     isTimerRunning = true
@@ -140,13 +130,12 @@ struct StepPageView: View {
                                     SpeakMessage(str: "Timer resumed!", speechSynthesizer: synth)
                                 } label: {
                                     Text("Resume")
-                                        .padding(.horizontal, 10) // Adjust horizontal padding
-                                        .padding(.vertical, 5)     // Adjust vertical padding
-                                        .font(.body)               // Change font size if needed
+                                        .padding(.horizontal, 10)
+                                        .padding(.vertical, 5)
+                                        .font(.body)
                                         .background(Color.green.opacity(0.7))
-                                        .foregroundColor(.white) // Change text color if needed
+                                        .foregroundColor(.white)
                                         .cornerRadius(5)
-                                    
                                 }
                                 
                                 Button {
@@ -158,19 +147,18 @@ struct StepPageView: View {
                                     SpeakMessage(str: "Timer stopped! Say Start to start a new timer.", speechSynthesizer: synth)
                                 } label: {
                                     Text("Restart")
-                                        .padding(.horizontal, 10) // Adjust horizontal padding
-                                        .padding(.vertical, 5)     // Adjust vertical padding
-                                        .font(.body)               // Change font size if needed
+                                        .padding(.horizontal, 10)
+                                        .padding(.vertical, 5)
+                                        .font(.body)
                                         .background(Color.red.opacity(0.7))
-                                        .foregroundColor(.white) // Change text color if needed
+                                        .foregroundColor(.white)
                                         .cornerRadius(5)
                                 }
                             }
                         }
                                 
                         // If time is up, show the text and speak the message
-                        if(isTimeUp)
-                        {
+                        if(isTimeUp) {
                             Text("Time is up!")
                                 .font(.system(size: 40))
                                 .onAppear() {
@@ -180,8 +168,6 @@ struct StepPageView: View {
                     }
                 }
             }
-            
-            
 
             Spacer()
             
@@ -195,9 +181,9 @@ struct StepPageView: View {
                         }
                     } label: {
                         Text("Previous Step")
-                            .padding(.horizontal, 10) // Adjust horizontal padding
-                            .padding(.vertical, 5)     // Adjust vertical padding
-                            .font(.body)               // Change font size if needed
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 5)
+                            .font(.body)
                             .background(Color.blue.opacity(0.7))
                     }
                     .buttonStyle(.borderedProminent)
@@ -223,7 +209,7 @@ struct StepPageView: View {
                 // If it's the final step, we want another button with another function call instead of the 'Next Step' one
                 else if cookingState.currentStep == meal.numberOfSteps - 1 {
                     Button {
-                        
+                        // Complete action can be implemented here
                     } label: {
                         Text("Complete")
                             .padding(.horizontal, 10)
@@ -236,47 +222,31 @@ struct StepPageView: View {
         }
         .padding()
         .navigationTitle("")
-                .navigationBarTitleDisplayMode(.inline)
-                .navigationBarItems(trailing: Button(action: {
-                    // Action for the help button
-                    HelpButtonPressed(status: HelpButtonState.STEP_PAGE, synth: synth, meal: meal, cookingState: cookingState)
-                }) {
-                    Text("?")
-                        .font(.title)
-                        .foregroundColor(.white)
-                        .frame(width: 44, height: 44) // Size of the button
-                        .background(Color.red)
-                        .clipShape(Circle()) // Makes the button circular
-                        .shadow(radius: 5) // Optional shadow
-                })
-                .onAppear() {
-                    // Start
-                    SpeakMessage(str: meal.steps[cookingState.currentStep].speakSteps, speechSynthesizer: synth)
-                }
-                .onChange(of: cookingState.currentStep) { newStep in
-                                
-                    SpeakMessage(str: "We are at step \(cookingState.currentStep + 1) of \(meal.numberOfSteps).", speechSynthesizer: synth)
-                    
-                    // Update
+        .navigationBarTitleDisplayMode(.inline)
+        .onAppear() {
+            // Start
+            SpeakMessage(str: meal.steps[cookingState.currentStep].speakSteps, speechSynthesizer: synth)
+        }
+        .onChange(of: cookingState.currentStep) { newStep in
+            SpeakMessage(str: "We are at step \(cookingState.currentStep + 1) of \(meal.numberOfSteps).", speechSynthesizer: synth)
             SpeakMessage(str: meal.steps[cookingState.currentStep].description, speechSynthesizer: synth)
             
             if meal.steps[newStep].usesTimer {
-                        timeRemaining = meal.steps[newStep].timerTime
-                        isTimerRunning = false
-                        timerStarted = false
-                        isTimeUp = false
-                        repeatTimeCount = 0;
-                    } else {
-                        timeRemaining = 0
-                        isTimerRunning = false
-                        timerStarted = false
-                        isTimeUp = false
-                        repeatTimeCount = 0
-                    }
-                }
+                timeRemaining = meal.steps[newStep].timerTime
+                isTimerRunning = false
+                timerStarted = false
+                isTimeUp = false
+                repeatTimeCount = 0;
+            } else {
+                timeRemaining = 0
+                isTimerRunning = false
+                timerStarted = false
+                isTimeUp = false
+                repeatTimeCount = 0
+            }
+        }
     }
 }
-
 
 struct StepPage_Previews: PreviewProvider {
     static var previews: some View {
@@ -285,8 +255,7 @@ struct StepPage_Previews: PreviewProvider {
             ingredients: "patate, provola",
             numberOfSteps: 4,
             imageName: "pasta",
-            steps:
-                [
+            steps: [
                 RecipeStep(
                     step: "1. Preparare la pasta",
                     imageName: "pasta",
@@ -332,7 +301,7 @@ struct StepPage_Previews: PreviewProvider {
                 ),
                 
                 RecipeStep(
-                    step: "3. Cuocere la pasta",
+                    step: "4. Cuocere la pasta",
                     imageName: "pasta",
                     description: "Drain pasta, do not rinse in cold water. Toss with a bit of olive oil, then mix into the sauce.",
                     speakSteps: """

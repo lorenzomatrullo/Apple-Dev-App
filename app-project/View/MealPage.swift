@@ -73,7 +73,6 @@ struct MealPage: View {
                         }
                     }
                 }
-                
             }
             
             NavigationLink(destination: StepPageView(meal)) {
@@ -91,17 +90,5 @@ struct MealPage: View {
         }
         .navigationTitle("Meal Page")
         .navigationBarTitleDisplayMode(.inline)
-        .navigationBarItems(trailing: Button(action: {
-                    // Action for the help button
-                    HelpButtonPressed(status: HelpButtonState.MEAL_PAGE, synth: synth, meal: meal, cookingState: nil)
-                }) {
-                    Text("?")
-                        .font(.title)
-                        .foregroundColor(.white)
-                        .frame(width: 44, height: 44) // Size of the button
-                        .background(Color.red)
-                        .clipShape(Circle()) // Makes the button circular
-                        .shadow(radius: 5) // Optional shadow
-                })
     }
 }
