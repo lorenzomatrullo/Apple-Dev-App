@@ -67,19 +67,22 @@ struct RecipesView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 20, height: 20)
+                .foregroundColor(.black) // Ensures the icon adapts to dark mode
 
             Text(meal.difficulty)
                 .font(.system(size: 14))
                 .bold()
-                .foregroundColor(.black)
+                .foregroundColor(.black) // Adjust text color to primary for good contrast
         }
         .padding(5)
-        .background(Color.white)
+        .background(Color(.white)) // Use dynamic background
+        .cornerRadius(8)
         .overlay(
             RoundedRectangle(cornerRadius: 8)
                 .stroke(Color.black.opacity(0.3), lineWidth: 2)
         )
     }
+
     
     private func dietaryLabel(text: String, color: Color) -> some View {
         Text(text)
