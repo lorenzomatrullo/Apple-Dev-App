@@ -7,7 +7,7 @@ struct StepPageView: View {
     private var meal: RecipesList
     
     // Timer-related variables
-    @State private var timeRemaining = 10                // Time left
+    @State private var timeRemaining = 10                 // Time left
     @State private var timerStarted = false               // If timer has started
     @State private var isTimerRunning = false             // If timer is currently running
     @State private var isTimerPaused = false              // If timer is currently paused
@@ -296,7 +296,7 @@ struct StepPageView: View {
             resetTimer()
         }
     }
-    
+ 
     private func handleTimerTick() {
         if timerStarted && isTimerRunning && timeRemaining > 0 {
             // Timer decrement
