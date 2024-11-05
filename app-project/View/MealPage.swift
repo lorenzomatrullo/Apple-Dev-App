@@ -17,7 +17,7 @@ struct MealPage: View {
     }
     
     var body: some View {
-        VStack {
+        VStack (spacing: -50) {
             Form {
                 RecipesView(meal)
                 
@@ -84,17 +84,16 @@ struct MealPage: View {
     
     private var startButton: some View {
         NavigationLink(destination: StepPageView(meal)) {
-            Text("START")
-                .font(.system(size: 25))
-                .bold()
+            Text("Start")
+                .font(.system(size: 20, weight: .medium))
                 .padding(.horizontal, 20)
                 .padding(.vertical, 5)
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(8)
         }
         .buttonStyle(.borderedProminent)
+        .tint(.blue) // Adds the system blue color (like Apple's button color)
+        .cornerRadius(8) // Rounded corners for a more Apple-like look
     }
+
     
     private var navigationButtons: some View {
         HStack {

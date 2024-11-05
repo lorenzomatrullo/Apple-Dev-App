@@ -205,6 +205,7 @@ struct StepPageView: View {
                 .background(Color.blue.opacity(0.7))
         }
         .buttonStyle(.borderedProminent)
+        .accessibilityInputLabels(["Previous", "Previous Step"])
     }
     
     private var nextStepButton: some View {
@@ -218,6 +219,7 @@ struct StepPageView: View {
                 .background(Color.blue.opacity(0.7))
         }
         .buttonStyle(.borderedProminent)
+        .accessibilityInputLabels(["next, next step"])
     }
     
     private var completeButton: some View {
