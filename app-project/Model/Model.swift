@@ -20,7 +20,20 @@ public struct RecipesList: Hashable {
     let glutenFree: Bool
     let steps: [RecipeStep] // Array of steps
     
-    init(recipeName: String = "", ingredients: String = "", numberOfSteps: Int = 0, imageName: String = "", difficulty: String = "", timeToCook: Int = 0, calories: Int = 0, servings: Int = 1, vegetarian: Bool = false, lactoseFree: Bool = false, glutenFree: Bool = false, steps: [RecipeStep] = []) {
+    init(
+        recipeName: String = "",
+        ingredients: String = "",
+        numberOfSteps: Int = 0,
+        imageName: String = "",
+        difficulty: String = "",
+        timeToCook: Int = 0,
+        calories: Int = 0,
+        servings: Int = 1,
+        vegetarian: Bool = false,
+        lactoseFree: Bool = false,
+        glutenFree: Bool = false,
+        steps: [RecipeStep] = []
+    ) {
         self.recipeName = recipeName
         self.ingredients = ingredients
         self.numberOfSteps = numberOfSteps
