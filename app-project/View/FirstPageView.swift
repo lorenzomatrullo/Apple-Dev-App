@@ -68,7 +68,7 @@ struct FirstPageView: View {
     private func handleOnAppear() {
         if hasToAnnounceHomepage {
             synth.stopSpeaking(at: .immediate)
-            SpeakMessage(str: "We are back on the homepage!", speechSynthesizer: synth)
+            SpeakMessage(str: "We are back at the cookbook page!", speechSynthesizer: synth)
             
             let commandMessage = "To get started with a recipe, you can just say 'tap' followed by the recipe name, like 'tap tomato pasta'. Or 'tap salad'."
             SpeakMessage(str: commandMessage, speechSynthesizer: synth)
