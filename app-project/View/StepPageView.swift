@@ -7,14 +7,14 @@ struct StepPageView: View {
     private var meal: RecipesList
     
     // Timer-related variables
-    @State private var timeRemaining = 10                 // Time left
-    @State private var timerStarted = false               // If timer has started
-    @State private var isTimerRunning = false             // If timer is currently running
-    @State private var isTimerPaused = false              // If timer is currently paused
-    @State private var isTimeUp = false                   // If timer is up
-    @State private var repeatTimeInterval = 5
-    @State private var repeatTimeCount = 0
-    @State private var introSpoken = false                // If intro has been spoken
+    @State var timeRemaining = 10                // time left
+    @State var timerStarted: Bool = false        // if timer has started
+    @State var isTimerRunning: Bool = false      // if timer is currently running
+    @State var isTimerPaused: Bool = false       // if timer is currently paused
+    @State var isTimeUp: Bool = false            // if timer is up
+    @State var repeatTimeInterval: Int = 5
+    @State var repeatTimeCount: Int = 0
+    @State var introSpoken: Bool = false         // if timer is up
 
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
@@ -26,29 +26,6 @@ struct StepPageView: View {
     init(_ meal: RecipesList) {
         self.meal = meal
         cookingState.currentStep = 0
-    }
-    
-    var body: some View {
-        VStack(alignment: .center) {
-            recipeTitle
-            recipeImage
-            
-            Spacer().frame(height: 20)
-            
-            stepInfo
-            stepDescription
-            
-            Spacer()
-            
-            navigationButtons
-        }
-        .padding()
-        .navigationTitle("")
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarBackButtonHidden() // Hide the back button
-        .navigationBarItems(leading: exitButton, trailing: helpAndRepeatButtons)
-        .onAppear(perform: handleOnAppear)
-        .onChange(of: cookingState.currentStep, perform: handleStepChange)
     }
     
     private var exitButton: some View {
@@ -75,300 +52,313 @@ struct StepPageView: View {
         .accessibilityLabel("Exit")
     }
     
-    private var exitButton1: some View {
-        NavigationLink(destination: StepPageView(meal)) {
-            Text("Start")
-                .font(.system(size: 14))
+    var body: some View {
+        VStack(alignment: .center) {
+            Text(meal.recipeName)
+                .font(.title)
                 .bold()
-                .padding(.vertical, 5)
-                .padding(.horizontal, 18)
-                .background(.red)
-                .foregroundColor(.white)
-                .cornerRadius(8)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.black.opacity(0.2), lineWidth: 2)
-                )
-        }
-    }
-    
-    private var recipeTitle: some View {
-        Text(meal.recipeName)
-            .font(.title)
-            .bold()
-            .padding(.top, 10)
-    }
-    
-    private var recipeImage: some View {
-        Image(meal.imageName)
-            .resizable()
-            .scaledToFit()
-            .frame(width: 175, height: 175)
-            .clipShape(RoundedRectangle(cornerRadius: 10))
-    }
-    
-    private var stepInfo: some View {
-        Text("Step \(cookingState.currentStep + 1) of \(meal.numberOfSteps)")
-            .font(.title2)
-            .fontWeight(.bold)
-            .padding(.top, 5)
-            .padding(.vertical, 10)
-    }
-    
-    private var stepDescription: some View {
-        ScrollView {
-            VStack {
-                Text(meal.steps[cookingState.currentStep].description)
-                    .padding(.bottom, 10)
+                .padding(.top, 10)
+            
+            // Display the recipe image
+            Image(meal.imageName)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 175, height: 175)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+            
+            Spacer().frame(height: 20)
                 
-                if meal.steps[cookingState.currentStep].usesTimer {
-                    timerView
+            // Display the current step information
+            Text("Step \(cookingState.currentStep + 1) of \(meal.numberOfSteps)")
+                .font(.title2)
+                .fontWeight(.bold)
+                .padding(.top, 5)
+                .padding(.vertical, 10)
+
+            // Step description
+            ScrollView {
+                VStack {
+                    Text("\(meal.steps[cookingState.currentStep].description)")
+                        .padding(.bottom, 10)
+                    
+                    // Add timer if needed for this step
+                    if meal.steps[cookingState.currentStep].usesTimer {
+                        Text(FormatTimeRemaining(timeRemaining))
+                            .onReceive(timer) { _ in
+                                if timerStarted && isTimerRunning && timeRemaining > 0 {
+                                    // Timer decrement
+                                    timeRemaining -= 1
+                                    repeatTimeCount += 1
+                                    
+                                    // Check if time is up
+                                    if timeRemaining == 0 {
+                                        isTimeUp = true
+                                    } else if repeatTimeCount >= repeatTimeInterval {
+                                        let remainingMinutes = timeRemaining / 60
+                                        let remainingSeconds = timeRemaining % 60
+                                        
+                                        if remainingMinutes > 0 {
+                                            SpeakMessage(str: "Time left: \(remainingMinutes) minutes and \(remainingSeconds) seconds", speechSynthesizer: synth)
+                                        } else {
+                                            SpeakMessage(str: "Time left: \(remainingSeconds) seconds", speechSynthesizer: synth)
+                                        }
+                                        repeatTimeCount = 0
+                                    }
+                                }
+                            }
+                            .foregroundColor(.blue)
+                            .font(.system(size: 60)) // Set to desired size
+                        
+                        // Timer controls
+                        if !timerStarted && !isTimeUp {
+                            Button {
+                                timerStarted = true
+                                isTimerRunning = true
+                                SpeakMessage(str: "Timer started!", speechSynthesizer: synth)
+                            } label: {
+                                Text("Start!")
+                                    .padding(.horizontal, 10)
+                                    .padding(.vertical, 5)
+                                    .font(.body)
+                                    .background(Color.blue.opacity(0.7))
+                                    .foregroundColor(.white)
+                                    .cornerRadius(5)
+                            }
+                            .accessibilityInputLabels(["start the timer, start, start timer"])
+                        } else if timerStarted && isTimerRunning && !isTimeUp {
+                            Button {
+                                isTimerRunning = false
+                                isTimerPaused = true
+                                SpeakMessage(str: "Timer paused!", speechSynthesizer: synth)
+                            } label: {
+                                Text("Pause")
+                                    .padding(.horizontal, 10)
+                                    .padding(.vertical, 5)
+                                    .font(.body)
+                                    .background(Color.red.opacity(0.7))
+                                    .foregroundColor(.white)
+                                    .cornerRadius(5)
+                            }
+                        } else if timerStarted && isTimerPaused {
+                            HStack {
+                                Button {
+                                    isTimerRunning = true
+                                    isTimerPaused = false
+                                    SpeakMessage(str: "Timer resumed!", speechSynthesizer: synth)
+                                } label: {
+                                    Text("Resume")
+                                        .padding(.horizontal, 10)
+                                        .padding(.vertical, 5)
+                                        .font(.body)
+                                        .background(Color.green.opacity(0.7))
+                                        .foregroundColor(.white)
+                                        .cornerRadius(5)
+                                }
+                                
+                                Button {
+                                    timerStarted = false
+                                    isTimerRunning = false
+                                    isTimerPaused = false
+                                    timeRemaining = meal.steps[cookingState.currentStep].timerTime
+                                    repeatTimeCount = 0
+                                    SpeakMessage(str: "Timer stopped! Say Start to start a new timer.", speechSynthesizer: synth)
+                                } label: {
+                                    Text("Restart")
+                                        .padding(.horizontal, 10)
+                                        .padding(.vertical, 5)
+                                        .font(.body)
+                                        .background(Color.red.opacity(0.7))
+                                        .foregroundColor(.white)
+                                        .cornerRadius(5)
+                                }
+                            }
+                        }
+                                
+                        // If time is up, show the text and speak the message
+                        if isTimeUp {
+                            Text("Time is up!")
+                                .font(.system(size: 40))
+                                .onAppear {
+                                    SpeakMessage(str: "Time is up!", speechSynthesizer: synth)
+                                }
+                        }
+                    }
+                }
+            }
+
+            Spacer()
+            
+            // HStack for navigation buttons
+            HStack {
+                if cookingState.currentStep > 0 {
+                    Button {
+                        cookingState.currentStep -= 1
+                    } label: {
+                        Text("Previous Step")
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 5)
+                            .font(.body)
+                            .background(Color.blue.opacity(0.7))
+                    }
+                    .buttonStyle(.borderedProminent)
+                }
+                
+                // Button to progress to the next step
+                if cookingState.currentStep < meal.numberOfSteps - 1 {
+                    Button {
+                        cookingState.currentStep += 1
+                    } label: {
+                        Text("Next Step")
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 5)
+                            .font(.body)
+                            .background(Color.blue.opacity(0.7))
+                    }
+                    .buttonStyle(.borderedProminent)
+                } else if cookingState.currentStep == meal.numberOfSteps - 1 {
+                    Button {
+                        // Complete action can be implemented here
+                    } label: {
+                        Text("Complete")
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 5)
+                            .font(.body)
+                            .background(Color.blue.opacity(0.7))
+                    }
+                    .buttonStyle(.borderedProminent)
                 }
             }
         }
-    }
-    
-    private var timerView: some View {
-        Text(FormatTimeRemaining(timeRemaining))
-            .onReceive(timer) { _ in handleTimerTick() }
-            .foregroundColor(.blue)
-            .font(.system(size: 60)) // Set to desired size
-        
-        // Timer controls
-        return Group {
-            if !timerStarted && !isTimeUp {
-                startTimerButton
-            } else if timerStarted && isTimerRunning && !isTimeUp {
-                pauseTimerButton
-            } else if timerStarted && isTimerPaused {
-                resumeAndRestartButtons
-            }
-            
-            if isTimeUp {
-                timeUpMessage
-            }
-        }
-    }
-    
-    private var startTimerButton: some View {
-        Button {
-            timerStarted = true
-            isTimerRunning = true
-            SpeakMessage(str: "Timer started!", speechSynthesizer: synth)
-        } label: {
-            Text("Start!")
-                .padding(.horizontal, 10)
-                .padding(.vertical, 5)
-                .font(.body)
-                .background(Color.blue.opacity(0.7))
-                .foregroundColor(.white)
-                .cornerRadius(5)
-        }
-        .accessibilityInputLabels(["start the timer, start, start timer"])
-    }
-    
-    private var pauseTimerButton: some View {
-        Button {
-            isTimerRunning = false
-            isTimerPaused = true
-            SpeakMessage(str: "Timer paused!", speechSynthesizer: synth)
-        } label: {
-            Text("Pause")
-                .padding(.horizontal, 10)
-                .padding(.vertical, 5)
-                .font(.body)
-                .background(Color.red.opacity(0.7))
-                .foregroundColor(.white)
-                .cornerRadius(5)
-        }
-    }
-    
-    private var resumeAndRestartButtons: some View {
-        HStack {
-            Button {
-                isTimerRunning = true
-                isTimerPaused = false
-                SpeakMessage(str: "Timer resumed!", speechSynthesizer: synth)
-            } label: {
-                Text("Resume")
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 5)
-                    .font(.body)
-                    .background(Color.green.opacity(0.7))
+        .padding()
+        .navigationTitle("")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden() //to hide the back button
+        .navigationBarItems(leading: exitButton, trailing: HStack {
+            // Help Button
+            Button(action: {
+                HelpButtonPressed(status: HelpButtonState.MEAL_PAGE, synth: synth, meal: meal, cookingState: nil)
+            }) {
+                Text("?")
+                    .font(.title)
                     .foregroundColor(.white)
-                    .cornerRadius(5)
+                    .frame(width: 44, height: 44)
+                    .background(Color.red)
+                    .clipShape(Circle())
+                    .shadow(radius: 5)
+                    .opacity(0)
             }
-            
-            Button {
-                resetTimer()
-            } label: {
-                Text("Restart")
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 5)
-                    .font(.body)
-                    .background(Color.red.opacity(0.7))
+            .accessibilityLabel("Help")
+
+            // Repeat button
+            Button(action: {
+                SpeakMessage(str: "We are at step \(cookingState.currentStep + 1) of \(meal.numberOfSteps).", speechSynthesizer: synth)
+                SpeakMessage(str: meal.steps[cookingState.currentStep].speakSteps, speechSynthesizer: synth)
+            }) {
+                Text("Repeat")
+                    .font(.title)
                     .foregroundColor(.white)
-                    .cornerRadius(5)
+                    .frame(width: 44, height: 44)
+                    .background(Color.blue)
+                    .clipShape(Circle())
+                    .shadow(radius: 5)
+                    .opacity(0)
+            }
+            .accessibilityLabel("Repeat")
+        })
+        .onAppear {
+            if !introSpoken {
+                synth.stopSpeaking(at: .immediate)
+                SpeakMessage(str: "We are at step \(cookingState.currentStep + 1) of \(meal.numberOfSteps). " + meal.steps[cookingState.currentStep].speakSteps, speechSynthesizer: synth)
+                introSpoken = true
             }
         }
-    }
-    
-    private var timeUpMessage: some View {
-        Text("Time is up!")
-            .font(.system(size: 40))
-            .onAppear {
-                SpeakMessage(str: "Time is up!", speechSynthesizer: synth)
-            }
-    }
-    
-    private var navigationButtons: some View {
-        HStack {
-            if cookingState.currentStep > 0 {
-                previousStepButton
-            }
-            
-            if cookingState.currentStep < meal.numberOfSteps - 1 {
-                nextStepButton
-            } else if cookingState.currentStep == meal.numberOfSteps - 1 {
-                completeButton
-            }
-        }
-    }
-    
-    private var previousStepButton: some View {
-        Button {
-            cookingState.currentStep -= 1
-        } label: {
-            Text("Previous Step")
-                .padding(.horizontal, 10)
-                .padding(.vertical, 5)
-                .font(.body)
-                .background(Color.blue.opacity(0.7))
-        }
-        .buttonStyle(.borderedProminent)
-        .accessibilityInputLabels(["Previous", "Previous Step"])
-    }
-    
-    private var nextStepButton: some View {
-        Button {
-            cookingState.currentStep += 1
-        } label: {
-            Text("Next Step")
-                .padding(.horizontal, 10)
-                .padding(.vertical, 5)
-                .font(.body)
-                .background(Color.blue.opacity(0.7))
-        }
-        .buttonStyle(.borderedProminent)
-        .accessibilityInputLabels(["next, next step"])
-    }
-    
-    private var completeButton: some View {
-        Button {
-            // Complete action can be implemented here
-        } label: {
-            Text("Complete")
-                .padding(.horizontal, 10)
-                .padding(.vertical, 5)
-                .font(.body)
-                .background(Color.blue.opacity(0.7))
-        }
-        .buttonStyle(.borderedProminent)
-    }
-    
-    private var helpAndRepeatButtons: some View {
-        HStack {
-            helpButton
-            repeatButton
-        }
-    }
-    
-    private var helpButton: some View {
-        Button(action: {
-            HelpButtonPressed(status: HelpButtonState.MEAL_PAGE, synth: synth, meal: meal, cookingState: nil)
-        }) {
-            Text("?")
-                .font(.title)
-                .foregroundColor(.white)
-                .frame(width: 44, height: 44)
-                .background(Color.red)
-                .clipShape(Circle())
-                .shadow(radius: 5)
-                .opacity(0)
-        }
-        .accessibilityLabel("Help")
-    }
-    
-    private var repeatButton: some View {
-        Button(action: {
+        .onChange(of: cookingState.currentStep) { newStep in
+            synth.stopSpeaking(at: .immediate)
             SpeakMessage(str: "We are at step \(cookingState.currentStep + 1) of \(meal.numberOfSteps).", speechSynthesizer: synth)
             SpeakMessage(str: meal.steps[cookingState.currentStep].speakSteps, speechSynthesizer: synth)
-        }) {
-            Text("Repeat")
-                .font(.title)
-                .foregroundColor(.white)
-                .frame(width: 44, height: 44)
-                .background(Color.blue)
-                .clipShape(Circle())
-                .shadow(radius: 5)
-                .opacity(0)
-        }
-        .accessibilityLabel("Repeat")
-    }
-    
-    private func handleOnAppear() {
-        if !introSpoken {
-            synth.stopSpeaking(at: .immediate)
-            SpeakMessage(str: "We are at step \(cookingState.currentStep + 1) of \(meal.numberOfSteps). " + meal.steps[cookingState.currentStep].speakSteps, speechSynthesizer: synth)
-            introSpoken = true
-        }
-    }
-    
-    private func handleStepChange(newStep: Int) {
-        synth.stopSpeaking(at: .immediate)
-        SpeakMessage(str: "We are at step \(newStep + 1) of \(meal.numberOfSteps).", speechSynthesizer: synth)
-        SpeakMessage(str: meal.steps[newStep].speakSteps, speechSynthesizer: synth)
 
-        if meal.steps[newStep].usesTimer {
-            timeRemaining = meal.steps[newStep].timerTime
-            isTimerRunning = false
-            timerStarted = false
-            isTimeUp = false
-            repeatTimeCount = 0
-        } else {
-            resetTimer()
-        }
-    }
- 
-    private func handleTimerTick() {
-        if timerStarted && isTimerRunning && timeRemaining > 0 {
-            // Timer decrement
-            timeRemaining -= 1
-            repeatTimeCount += 1
-            
-            // Check if time is up
-            if timeRemaining == 0 {
-                isTimeUp = true
-            } else if repeatTimeCount >= repeatTimeInterval {
-                let remainingMinutes = timeRemaining / 60
-                let remainingSeconds = timeRemaining % 60
-                
-                if remainingMinutes > 0 {
-                    SpeakMessage(str: "Time left: \(remainingMinutes) minutes and \(remainingSeconds) seconds", speechSynthesizer: synth)
-                } else {
-                    SpeakMessage(str: "Time left: \(remainingSeconds) seconds", speechSynthesizer: synth)
-                }
+            if meal.steps[newStep].usesTimer {
+                timeRemaining = meal.steps[newStep].timerTime
+                isTimerRunning = false
+                timerStarted = false
+                isTimeUp = false
+                repeatTimeCount = 0
+            } else {
+                timeRemaining = 0
+                isTimerRunning = false
+                timerStarted = false
+                isTimeUp = false
                 repeatTimeCount = 0
             }
         }
     }
-    
-    private func resetTimer() {
-        timerStarted = false
-        isTimerRunning = false
-        isTimerPaused = false
-        timeRemaining = meal.steps[cookingState.currentStep].timerTime
-        repeatTimeCount = 0
-        SpeakMessage(str: "Timer stopped! Say Start to start a new timer.", speechSynthesizer: synth)
+}
+
+struct StepPage_Previews: PreviewProvider {
+    static var previews: some View {
+        let sampleMeal = RecipesList(
+            recipeName: "Pasta",
+            ingredients: "patate, provola",
+            numberOfSteps: 4,
+            imageName: "pasta",
+            steps: [
+                RecipeStep(
+                    step: "1. Preparare la pasta",
+                    imageName: "pasta",
+                    description: """
+                    Let’s gather all the ingredients and place them on a clean, accessible table. When you’re ready with everything on the table, say ‘ready.’
+                    
+                    Ingredients:
+                    • Olive oil
+                    • Garlic
+                    • Canned tomato sauce
+                    • Salt
+                    • Pepper
+                    • Fresh basil leaves (optional)
+                    • Pasta (spaghetti, penne, or your choice)
+                    • Grated Parmesan or Pecorino cheese (optional)
+                    """,
+                    speakSteps: """
+                    Hello
+                    """,
+                    usesTimer: false,
+                    timerTime: 0
+                ),
+                
+                RecipeStep(
+                    step: "2. Preparare le patate",
+                    imageName: "patate",
+                    description: "Place tomatoes in a large pot and cover with cold water. Bring just to a boil. Pour off water, and cover again with cold water. Peel the skin off tomatoes and cut into small pieces.",
+                    speakSteps: """
+                    Hello
+                    """,
+                    usesTimer: false,
+                    timerTime: 0
+                ),
+                
+                RecipeStep(
+                    step: "3. Cuocere la pasta",
+                    imageName: "pasta",
+                    description: "For this step we need a timer, so you can see how long it takes to cook the pasta. Say 'START' when you're ready to cook the pasta.",
+                    speakSteps: """
+                    Hello
+                    """,
+                    usesTimer: true,
+                    timerTime: 30
+                ),
+                
+                RecipeStep(
+                    step: "4. Cuocere la pasta",
+                    imageName: "pasta",
+                    description: "Drain pasta, do not rinse in cold water. Toss with a bit of olive oil, then mix into the sauce.",
+                    speakSteps: """
+                    Hello
+                    """,
+                    usesTimer: false,
+                    timerTime: 0
+                ),
+            ]
+        )
+        StepPageView(sampleMeal).environmentObject(Model())
     }
 }
