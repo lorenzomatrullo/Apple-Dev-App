@@ -46,9 +46,47 @@ struct StepPageView: View {
         .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden() // Hide the back button
-        .navigationBarItems(trailing: helpAndRepeatButtons)
+        .navigationBarItems(leading: exitButton, trailing: helpAndRepeatButtons)
         .onAppear(perform: handleOnAppear)
         .onChange(of: cookingState.currentStep, perform: handleStepChange)
+    }
+    
+    private var exitButton: some View {
+        Button(action: {
+            // Dismiss the current view and go back to FirstPageView
+            presentationMode.wrappedValue.dismiss()
+        }) {
+            Text("Exit")
+                .font(.system(size: 14))
+                .bold()
+                .padding(.vertical, 5)
+                .padding(.horizontal, 18)
+                .background(.red)
+                .foregroundColor(.white)
+                .cornerRadius(8)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.black.opacity(0.2), lineWidth: 2)
+                )
+        }
+        .accessibilityLabel("Exit")
+    }
+    
+    private var exitButton1: some View {
+        NavigationLink(destination: StepPageView(meal)) {
+            Text("Start")
+                .font(.system(size: 14))
+                .bold()
+                .padding(.vertical, 5)
+                .padding(.horizontal, 18)
+                .background(.red)
+                .foregroundColor(.white)
+                .cornerRadius(8)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.black.opacity(0.2), lineWidth: 2)
+                )
+        }
     }
     
     private var recipeTitle: some View {
@@ -329,74 +367,5 @@ struct StepPageView: View {
         timeRemaining = meal.steps[cookingState.currentStep].timerTime
         repeatTimeCount = 0
         SpeakMessage(str: "Timer stopped! Say Start to start a new timer.", speechSynthesizer: synth)
-    }
-}
-
-struct StepPage_Previews: PreviewProvider {
-    static var previews: some View {
-        let sampleMeal = RecipesList(
-            recipeName: "Pasta",
-            ingredients: "patate, provola",
-            numberOfSteps: 4,
-            imageName: "pasta",
-            steps: [
-                RecipeStep(
-                    step: "1. Preparare la pasta",
-                    imageName: "pasta",
-                    description: """
-                    Let’s gather all the ingredients and place them on a clean, accessible table. When you’re ready with everything on the table, say ‘ready.’
-                    
-                    Ingredients:
-                    • Olive oil
-                    • Garlic
-                    • Canned tomato sauce
-                    • Salt
-                    • Pepper
-                    • Fresh basil leaves (optional)
-                    • Pasta (spaghetti, penne, or your choice)
-                    • Grated Parmesan or Pecorino cheese (optional)
-                    """,
-                    speakSteps: """
-                    Hello
-                    """,
-                    usesTimer: false,
-                    timerTime: 0
-                ),
-                
-                RecipeStep(
-                    step: "2. Preparare le patate",
-                    imageName: "patate",
-                    description: "Place tomatoes in a large pot and cover with cold water. Bring just to a boil. Pour off water, and cover again with cold water. Peel the skin off tomatoes and cut into small pieces.",
-                    speakSteps: """
-                    Hello
-                    """,
-                    usesTimer: false,
-                    timerTime: 0
-                ),
-                
-                RecipeStep(
-                    step: "3. Cuocere la pasta",
-                    imageName: "pasta",
-                    description: "For this step we need a timer, so you can see how long it takes to cook the pasta. Say 'START' when you're ready to cook the pasta.",
-                    speakSteps: """
-                    Hello
-                    """,
-                    usesTimer: true,
-                    timerTime: 30
-                ),
-                
-                RecipeStep(
-                    step: "4. Cuocere la pasta",
-                    imageName: "pasta",
-                    description: "Drain pasta, do not rinse in cold water. Toss with a bit of olive oil, then mix into the sauce.",
-                    speakSteps: """
-                    Hello
-                    """,
-                    usesTimer: false,
-                    timerTime: 0
-                ),
-            ]
-        )
-        StepPageView(sampleMeal).environmentObject(Model())
     }
 }
