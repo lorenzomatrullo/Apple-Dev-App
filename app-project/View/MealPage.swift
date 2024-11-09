@@ -32,11 +32,20 @@ struct MealPage: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(trailing: navigationButtons)
         .onAppear {
-            hasToAnnounceHomepage = true
             
-            // Check if the details have already been spoken
-            if !hasSpokenDetails {
-                speakRecipeDetails()
+            if(hasExitedFromStepView)
+            {
+                hasExitedFromStepView = false
+                presentationMode.wrappedValue.dismiss()
+            }
+            else
+            {
+                hasToAnnounceHomepage = true
+                
+                // Check if the details have already been spoken
+                if !hasSpokenDetails {
+                    speakRecipeDetails()
+                }
             }
         }
     }

@@ -5,6 +5,8 @@ import AVFoundation
 public let synth = AVSpeechSynthesizer()
 public var hasToAnnounceHomepage: Bool = false
 
+public var hasExitedFromStepView : Bool = false
+
 // Model for a recipe
 public struct RecipesList: Hashable {
     let recipeName: String

@@ -53,8 +53,11 @@ struct StepPageView: View {
     
     private var exitButton: some View {
         Button(action: {
+            hasExitedFromStepView = true
             // Dismiss the current view and go back to FirstPageView
             presentationMode.wrappedValue.dismiss()
+            
+
         }) {
             Text("Exit")
                 .font(.system(size: 14))
