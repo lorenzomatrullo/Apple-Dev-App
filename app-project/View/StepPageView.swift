@@ -12,7 +12,7 @@ struct StepPageView: View {
     @State var isTimerRunning: Bool = false      // if timer is currently running
     @State var isTimerPaused: Bool = false       // if timer is currently paused
     @State var isTimeUp: Bool = false            // if timer is up
-    @State var repeatTimeInterval: Int = 5
+    @State var repeatTimeInterval: Int = 60
     @State var repeatTimeCount: Int = 0
     @State var introSpoken: Bool = false         // if timer is up
 
@@ -83,6 +83,46 @@ struct StepPageView: View {
                     
                     // Add timer if needed for this step
                     if meal.steps[cookingState.currentStep].usesTimer {
+                        
+                        Button {
+                            timeRemaining += 60
+                            
+                            let remainingMinutes = timeRemaining / 60
+                            let remainingSeconds = timeRemaining % 60
+                            
+                            if remainingMinutes > 0 {
+                                SpeakMessage(str: "Timer updated to: \(remainingMinutes) minutes and \(remainingSeconds) seconds", speechSynthesizer: synth)
+                            } else {
+                                SpeakMessage(str: "Timer updated to: \(remainingSeconds) seconds", speechSynthesizer: synth)
+                            }
+                        } label: {
+                            Text("Add One Minute")
+                                .hidden()
+                        }
+                        .accessibilityInputLabels(["Add One Minute"])
+                        
+                        Button {
+                            timeRemaining -= 60
+                            
+                            if(timeRemaining < 0) {
+                                timeRemaining = 0
+                                isTimeUp = true
+                            }
+                            
+                            let remainingMinutes = timeRemaining / 60
+                            let remainingSeconds = timeRemaining % 60
+                            
+                            if remainingMinutes > 0 {
+                                SpeakMessage(str: "Timer updated to: \(remainingMinutes) minutes and \(remainingSeconds) seconds", speechSynthesizer: synth)
+                            } else {
+                                SpeakMessage(str: "Timer updated to: \(remainingSeconds) seconds", speechSynthesizer: synth)
+                            }
+                        } label: {
+                            Text("Subtract One Minute")
+                                .hidden()
+                        }
+                        .accessibilityInputLabels(["Subtract One Minute"])
+                        
                         Text(FormatTimeRemaining(timeRemaining))
                             .onReceive(timer) { _ in
                                 if timerStarted && isTimerRunning && timeRemaining > 0 {
@@ -116,7 +156,7 @@ struct StepPageView: View {
                                 isTimerRunning = true
                                 SpeakMessage(str: "Timer started!", speechSynthesizer: synth)
                             } label: {
-                                Text("Start!")
+                                Text("Start")
                                     .padding(.horizontal, 10)
                                     .padding(.vertical, 5)
                                     .font(.body)
@@ -124,7 +164,7 @@ struct StepPageView: View {
                                     .foregroundColor(.white)
                                     .cornerRadius(5)
                             }
-                            .accessibilityInputLabels(["start the timer, start, start timer"])
+                            .accessibilityInputLabels(["Start"])
                         } else if timerStarted && isTimerRunning && !isTimeUp {
                             Button {
                                 isTimerRunning = false
