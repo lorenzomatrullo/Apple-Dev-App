@@ -147,12 +147,12 @@ struct MealPage: View {
         synth.stopSpeaking(at: .immediate)
         
         // Determine if the meal is vegetarian
-        let vegetarianStatus = meal.vegetarian ? "This meal is vegetarian." : "This meal is not vegetarian."
+        let vegetarianStatus = meal.vegetarian ? "This meal is vegetarian." : ""
 
         // Speak the details of the chosen recipe
         let detailsMessage = """
         \(vegetarianStatus)
-        Here are the details for \(meal.recipeName):
+        You have choosen \(meal.recipeName):
         Difficulty: \(meal.difficulty),
         Time: \(meal.timeToCook) minutes,
         Calories: \(meal.calories) kcal,

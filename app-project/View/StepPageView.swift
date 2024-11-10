@@ -219,7 +219,7 @@ struct StepPageView: View {
                             Text("Time is up!")
                                 .font(.system(size: 40))
                                 .onAppear {
-                                    SpeakMessage(str: "Time is up!", speechSynthesizer: synth)
+                                    SpeakMessage(str: meal.steps[cookingState.currentStep].afterTimerText, speechSynthesizer: synth)
                                 }
                         }
                     }

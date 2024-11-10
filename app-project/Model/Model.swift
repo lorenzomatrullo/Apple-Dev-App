@@ -60,6 +60,7 @@ struct RecipeStep: Hashable {
     let speakSteps: String
     let usesTimer: Bool
     let timerTime: Int // time in seconds
+    let afterTimerText : String // when timer expires, we want to say some additional thing for each step, like "shut down the stove" after cooking pasta
 }
 
 public struct CookingState {
@@ -104,15 +105,14 @@ class Model: ObservableObject {
                     speakSteps: """
                     Let’s begin with the Tomato Pasta Recipe.
                     
-                    Choose a pot that is appropriate for the amount of water you want to boil.
-                    Place it on the stove, ensuring it sits flat and securely. Set the burner to a high heat setting and let’s wait for the water to boil.
-                    
-                    When you hear bubbles, it means we’re ready to move on to the next step.
-                    
+                    Choose a big  pot and pour it with water halfway.
+                    Place it on the stove, ensuring it sits flat and securely. Set the burner to a high heat setting, and let’s wait for the water to boil.
+                    When you will hear bubbles, it means we’re ready to move on the next step.
                     When you are ready, say ‘Tap Next Step’.
                     """,
                     usesTimer: false,
-                    timerTime: 0
+                    timerTime: 0,
+                    afterTimerText: ""
                 ),
                 RecipeStep(
                     step: "2. Cook the pasta",
@@ -123,12 +123,13 @@ class Model: ObservableObject {
                     
                     Take 80g of pennette pasta and carefully put it into the water.
                     
-                    When you do, say ‘Tap Start Timer’ and I will start the timer.
+                    When you do, say ‘Tap Start’ and I will start the timer.
                     
                     I will update you every minute with the time left.
                     """,
                     usesTimer: true,
-                    timerTime: 600
+                    timerTime: 600,
+                    afterTimerText: "Time is up! Let’s shut down the stove and carefully move the pot on the side. When you’re ready to drain the pasta, say ‘Tap Next Step’."
                 ),
                 RecipeStep(
                     step: "3. Drain the pasta",
@@ -140,7 +141,8 @@ class Model: ObservableObject {
                     Once you’ve done it, say ‘Tap Next Step’ to move onto the next step.
                     """,
                     usesTimer: false,
-                    timerTime: 0
+                    timerTime: 0,
+                    afterTimerText: ""
                 ),
                 RecipeStep(
                     step: "4. Start preparing the Tomato Sauce",
@@ -152,7 +154,8 @@ class Model: ObservableObject {
                     When you do, say ‘Tap Next Step’ to continue.
                     """,
                     usesTimer: false,
-                    timerTime: 0
+                    timerTime: 0,
+                    afterTimerText: ""
                 ),
                 RecipeStep(
                     step: "5. Add olive oil and garlic",
@@ -164,7 +167,8 @@ class Model: ObservableObject {
                     When you’re ready to move on to the next step, say ‘Tap Next Step’.
                     """,
                     usesTimer: false,
-                    timerTime: 0
+                    timerTime: 0,
+                    afterTimerText: ""
                 ),
                 RecipeStep(
                     step: "6. Cook the garlic",
@@ -176,7 +180,8 @@ class Model: ObservableObject {
                     You can say ‘Tap Start Timer’ to start it. I will update you every minute.
                     """,
                     usesTimer: true,
-                    timerTime: 120
+                    timerTime: 120,
+                    afterTimerText: "Time is up! We can move to the next step when you say, ‘Tap Next Step'."
                 ),
                 RecipeStep(
                     step: "7. Add tomatoes",
@@ -188,7 +193,8 @@ class Model: ObservableObject {
                     Once you do it, say ‘Tap Next Step’ to move onto the next step.
                     """,
                     usesTimer: false,
-                    timerTime: 0
+                    timerTime: 0,
+                    afterTimerText: ""
                 ),
                 RecipeStep(
                     step: "8. Cook the tomatoes",
@@ -200,7 +206,8 @@ class Model: ObservableObject {
                     When you’re ready, say ‘Tap Start Timer’. I will update you every minute. When I do, you can gently mix the tomatoes in the pan.
                     """,
                     usesTimer: true,
-                    timerTime: 180
+                    timerTime: 180,
+                    afterTimerText: "Time is up! Say ‘Tap Next Step’ to continue. You should do it straight away as the burner is still going."
                 ),
                 RecipeStep(
                     step: "9. Add the pasta",
@@ -215,7 +222,8 @@ class Model: ObservableObject {
                     I will update you every minute. Whenever I update you, you can give it a gentle mix.
                     """,
                     usesTimer: true,
-                    timerTime: 120
+                    timerTime: 120,
+                    afterTimerText: "Time is up! You can shutdown the burner now. When you’re ready to move on, say ‘Tap Next Step’."
                 ),
                 RecipeStep(
                     step: "10. Time to plate!",
@@ -227,7 +235,8 @@ class Model: ObservableObject {
                     Say ‘Complete Recipe’ to finish the process!
                     """,
                     usesTimer: false,
-                    timerTime: 0
+                    timerTime: 0,
+                    afterTimerText: ""
                 ),
             ]
         ),
@@ -257,7 +266,8 @@ class Model: ObservableObject {
                     """,
                     speakSteps: "",
                     usesTimer: false,
-                    timerTime: 0
+                    timerTime: 0,
+                    afterTimerText: ""
                 ),
                 RecipeStep(
                     step: "2. Prepare tomatoes",
@@ -267,7 +277,8 @@ class Model: ObservableObject {
                     """,
                     speakSteps: "",
                     usesTimer: false,
-                    timerTime: 0
+                    timerTime: 0,
+                    afterTimerText: ""
                 ),
                 RecipeStep(
                     step: "3. Cook the sauce",
@@ -277,7 +288,8 @@ class Model: ObservableObject {
                     """,
                     speakSteps: "",
                     usesTimer: false,
-                    timerTime: 0
+                    timerTime: 0,
+                    afterTimerText: ""
                 ),
                 RecipeStep(
                     step: "4. Combine pasta and sauce",
@@ -287,7 +299,8 @@ class Model: ObservableObject {
                     """,
                     speakSteps: "",
                     usesTimer: false,
-                    timerTime: 0
+                    timerTime: 0,
+                    afterTimerText: ""
                 ),
             ]
         ),
@@ -315,6 +328,7 @@ public func FormatTimeRemaining(_ seconds: Int) -> String {
 public func SpeakMessage(str: String, speechSynthesizer: AVSpeechSynthesizer) {
     let voice = AVSpeechSynthesisVoice(language: "en-US")
     let msgUtterance = AVSpeechUtterance(string: str)
+    msgUtterance.rate = 0.45
     msgUtterance.voice = voice
     speechSynthesizer.speak(msgUtterance)
 }
