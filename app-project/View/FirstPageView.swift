@@ -7,13 +7,15 @@ struct FirstPageView: View {
     @State private var hasSpokenWelcomeMessage = false
     @State private var isFirstLaunch: Bool
 
+    @State public var navigationPath = NavigationPath()
+
     init() {
         // Initialize isFirstLaunch based on UserDefaults
         _isFirstLaunch = State(initialValue: UserDefaults.standard.bool(forKey: "hasLaunchedBefore") == false)
     }
 
     var body: some View {
-        NavigationView {
+        NavigationStack(path: $navigationPath)  {
             List {
                 ForEach(self.model.meal, id: \.self) { item in
                     NavigationLink(destination: MealPage(item)) {
