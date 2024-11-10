@@ -125,6 +125,7 @@ struct MealPage: View {
                 .opacity(0) // Adjust opacity as needed
         }
         .accessibilityLabel("Help")
+        .allowsHitTesting(false)
     }
     
     private var repeatButton: some View {
@@ -141,6 +142,7 @@ struct MealPage: View {
                 .opacity(0) // Adjust opacity as needed
         }
         .accessibilityLabel("Repeat")
+        .allowsHitTesting(false)
     }
 
     private func speakRecipeDetails() {
