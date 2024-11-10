@@ -75,6 +75,14 @@ struct FirstPageView: View {
 
     // Handle First Page Appearance
     private func handleOnAppear() {
+        
+        // This handles the situation where you close the initial voice control alert before the TTS has finished speaking, if you tap OK the TTS will stop and it will start directly with the homepage dialogue
+        if(firstTimeOnHomepage)
+        {
+            synth.stopSpeaking(at: .immediate)
+            firstTimeOnHomepage = false;
+        }
+        
         if hasToAnnounceHomepage {
             synth.stopSpeaking(at: .immediate)
             SpeakMessage(str: "We are back at the cookbook page!", speechSynthesizer: synth)
@@ -104,22 +112,33 @@ struct FirstPageView: View {
             } else {
                 formattedRecipeNames = recipeNames.first ?? ""
             }
+            
+            let welcomeMessage = """
+            Welcome to TasteEcho. Here’s your cooking instruction. I’ll guide you step by step.
+            To start a recipe, just say 'tap' and then the recipe name. Like 'Tap tomato pasta', or, 'tap salad' to begin.
+            You can always say “tap Repeat”, if you want to hear each step one more time. Or say, “tap Help”, if you don’t remember how to navigate through the steps.
+            
+            
+            Let’s start cooking, I will wait for your answer.
+            """
 
-            let welcomeMessage = "Welcome to TasteEcho, let's explore delicious recipes. You can choose between: \(formattedRecipeNames)."
+            //let welcomeMessage = "Welcome to TasteEcho, let's explore delicious recipes. You can choose between: \(formattedRecipeNames)."
             SpeakMessage(str: welcomeMessage, speechSynthesizer: synth)
             
+            /*
             // Add message about using voice commands
             let commandMessage = "To get started with a recipe, you can just say 'tap' followed by the recipe name, like 'tap tomato pasta'. Or 'tap salad'."
             SpeakMessage(str: commandMessage, speechSynthesizer: synth)
             
             let helpMsg = "Remember you can always say 'Tap Repeat' to make me repeat the instructions. Or you can say 'Tap Help' to get help on the page you're currently in."
             SpeakMessage(str: helpMsg, speechSynthesizer: synth)
-
+            */
+            
             // Mark first launch as completed
             UserDefaults.standard.set(true, forKey: "hasLaunchedBefore")
         } else {
             // Subsequent launches - Show shorter message
-            let shortMessage = "Welcome back to TasteEcho. To get started, tap a recipe or use voice commands."
+            let shortMessage = "Welcome back to TasteEcho. Let's start cooking, you can choose between tomato pasta, or, salad, I will wait for your answer."
             SpeakMessage(str: shortMessage, speechSynthesizer: synth)
         }
 
