@@ -45,15 +45,10 @@ struct FirstPageView: View {
             HelpButtonPressed(status: HelpButtonState.HOME_PAGE, synth: synth, meal: nil, cookingState: nil)
         }) {
             Text("?")
-                .font(.title)
-                .foregroundColor(.white)
-                .frame(width: 44, height: 44)
-                .background(.red)
-                .clipShape(Circle())
-                .shadow(radius: 5)
-                .opacity(0) // Adjust opacity as needed
+                .opacity(0)
         }
         .accessibilityLabel("Help")
+        .allowsHitTesting(false)
     }
 
     // Repeat Button
@@ -63,14 +58,10 @@ struct FirstPageView: View {
             SpeakHomepageMessage()
         }) {
             Text("Repeat")
-                .foregroundColor(.white)
-                .frame(width: 44, height: 44)
-                .background(.blue)
-                .clipShape(Circle())
-                .shadow(radius: 5)
                 .opacity(0)
         }
         .accessibilityLabel("Repeat")
+        .allowsHitTesting(false)
     }
 
     // Handle First Page Appearance
