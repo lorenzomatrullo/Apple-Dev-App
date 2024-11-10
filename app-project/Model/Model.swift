@@ -232,7 +232,7 @@ class Model: ObservableObject {
                     speakSteps: """
                     We’re done! We can now add a few basil leaves as a final touch, then you can put the pasta on a plate and enjoy it!
                     
-                    Say ‘Complete Recipe’ to finish the process!
+                    Say ‘Tap Complete’, or, 'Tap Exit', to finish the process!
                     """,
                     usesTimer: false,
                     timerTime: 0,

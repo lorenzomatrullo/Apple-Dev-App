@@ -257,7 +257,8 @@ struct StepPageView: View {
                     .buttonStyle(.borderedProminent)
                 } else if cookingState.currentStep == meal.numberOfSteps - 1 {
                     Button {
-                        // Complete action can be implemented here
+                        hasExitedFromStepView = true
+                        presentationMode.wrappedValue.dismiss()
                     } label: {
                         Text("Complete")
                             .padding(.horizontal, 10)
