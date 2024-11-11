@@ -12,9 +12,11 @@ struct MealPage: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var hasSpokenDetails = false // State variable to track spoken status
     
+    
     init(_ meal: RecipesList) {
         self.meal = meal
     }
+    
     
     var body: some View {
         VStack (spacing: -50) {
@@ -50,6 +52,7 @@ struct MealPage: View {
         }
     }
     
+    
     private var mealDetailsSection: some View {
         VStack(alignment: .leading) {
             detailRow(title: "TIME:", value: "\(meal.timeToCook) minutes")
@@ -58,6 +61,7 @@ struct MealPage: View {
         }
         .padding(.top, 10)
     }
+    
     
     private func detailRow(title: String, value: String) -> some View {
         HStack {
@@ -72,6 +76,7 @@ struct MealPage: View {
                 .foregroundColor(.secondary)
         }
     }
+    
     
     private var ingredientsSection: some View {
         Section(header: Text("Ingredients")
@@ -158,4 +163,3 @@ struct MealPage: View {
         hasSpokenDetails = true
     }
 }
-
