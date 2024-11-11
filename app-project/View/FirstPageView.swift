@@ -7,13 +7,18 @@ struct FirstPageView: View {
     @State private var hasSpokenWelcomeMessage = false
     @State private var isFirstLaunch: Bool
 
+    @State public var navigationPath = NavigationPath()
+
     init() {
+        // Prevent the phone from timing out because of no touch interaction while the app is open
+        UIApplication.shared.isIdleTimerDisabled = true
+        
         // Initialize isFirstLaunch based on UserDefaults
         _isFirstLaunch = State(initialValue: UserDefaults.standard.bool(forKey: "hasLaunchedBefore") == false)
     }
 
     var body: some View {
-        NavigationView {
+        NavigationStack(path: $navigationPath)  {
             List {
                 ForEach(self.model.meal, id: \.self) { item in
                     NavigationLink(destination: MealPage(item)) {

@@ -33,8 +33,6 @@ struct StepPageView: View {
             hasExitedFromStepView = true
             // Dismiss the current view and go back to FirstPageView
             presentationMode.wrappedValue.dismiss()
-            
-
         }) {
             Text("Exit")
                 .font(.system(size: 14))
@@ -100,6 +98,7 @@ struct StepPageView: View {
                                 .hidden()
                         }
                         .accessibilityInputLabels(["Add One Minute"])
+                        .allowsHitTesting(false)
                         
                         Button {
                             timeRemaining -= 60
@@ -122,6 +121,7 @@ struct StepPageView: View {
                                 .hidden()
                         }
                         .accessibilityInputLabels(["Subtract One Minute"])
+                        .allowsHitTesting(false)
                         
                         Text(FormatTimeRemaining(timeRemaining))
                             .onReceive(timer) { _ in
@@ -289,6 +289,8 @@ struct StepPageView: View {
                     .opacity(0)
             }
             .accessibilityLabel("Help")
+            .allowsHitTesting(false)
+
 
             // Repeat button
             Button(action: {
@@ -305,6 +307,8 @@ struct StepPageView: View {
                     .opacity(0)
             }
             .accessibilityLabel("Repeat")
+            .allowsHitTesting(false)
+
         })
         .onAppear {
             if !introSpoken {
