@@ -116,6 +116,7 @@ struct MealPage: View {
         }
     }
     
+    
     private var helpButton: some View {
         Button(action: {
             HelpButtonPressed(status: HelpButtonState.MEAL_PAGE, synth: synth, meal: meal, cookingState: nil)
@@ -138,6 +139,7 @@ struct MealPage: View {
         .allowsHitTesting(false)
     }
 
+    
     private func speakRecipeDetails() {
         synth.stopSpeaking(at: .immediate)
         
