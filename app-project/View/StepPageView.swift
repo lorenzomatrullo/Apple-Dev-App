@@ -280,13 +280,7 @@ struct StepPageView: View {
                 HelpButtonPressed(status: HelpButtonState.MEAL_PAGE, synth: synth, meal: meal, cookingState: nil)
             }) {
                 Text("?")
-                    .font(.title)
-                    .foregroundColor(.white)
-                    .frame(width: 44, height: 44)
-                    .background(Color.red)
-                    .clipShape(Circle())
-                    .shadow(radius: 5)
-                    .opacity(0)
+                    .hidden()
             }
             .accessibilityLabel("Help")
             .allowsHitTesting(false)
@@ -298,13 +292,7 @@ struct StepPageView: View {
                 SpeakMessage(str: meal.steps[cookingState.currentStep].speakSteps, speechSynthesizer: synth)
             }) {
                 Text("Repeat")
-                    .font(.title)
-                    .foregroundColor(.white)
-                    .frame(width: 44, height: 44)
-                    .background(Color.blue)
-                    .clipShape(Circle())
-                    .shadow(radius: 5)
-                    .opacity(0)
+                    .hidden()
             }
             .accessibilityLabel("Repeat")
             .allowsHitTesting(false)

@@ -50,7 +50,7 @@ struct FirstPageView: View {
             HelpButtonPressed(status: HelpButtonState.HOME_PAGE, synth: synth, meal: nil, cookingState: nil)
         }) {
             Text("?")
-                .opacity(0)
+                .hidden()
         }
         .accessibilityLabel("Help")
         .allowsHitTesting(false)
@@ -63,7 +63,7 @@ struct FirstPageView: View {
             SpeakHomepageMessage()
         }) {
             Text("Repeat")
-                .opacity(0)
+                .hidden()
         }
         .accessibilityLabel("Repeat")
         .allowsHitTesting(false)

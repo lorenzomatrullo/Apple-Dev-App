@@ -116,13 +116,7 @@ struct MealPage: View {
             HelpButtonPressed(status: HelpButtonState.MEAL_PAGE, synth: synth, meal: meal, cookingState: nil)
         }) {
             Text("?")
-                .font(.title)
-                .foregroundColor(.white)
-                .frame(width: 44, height: 44)
-                .background(Color.red)
-                .clipShape(Circle())
-                .shadow(radius: 5)
-                .opacity(0) // Adjust opacity as needed
+                .hidden()
         }
         .accessibilityLabel("Help")
         .allowsHitTesting(false)
@@ -133,13 +127,7 @@ struct MealPage: View {
             speakRecipeDetails()
         }) {
             Text("Repeat")
-                .font(.title)
-                .foregroundColor(.white)
-                .frame(width: 44, height: 44)
-                .background(Color.blue)
-                .clipShape(Circle())
-                .shadow(radius: 5)
-                .opacity(0) // Adjust opacity as needed
+                .hidden()
         }
         .accessibilityLabel("Repeat")
         .allowsHitTesting(false)
