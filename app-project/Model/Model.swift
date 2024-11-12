@@ -177,7 +177,7 @@ class Model: ObservableObject {
                     speakSteps: """
                     When the olive oil and garlic are in the pan, let’s set the burner to medium heat and wait for the olive oil to get hot. I will help you with a Timer of 2 minutes.
                     
-                    You can say ‘Tap Start Timer’ to start it. I will update you every minute.
+                    You can say ‘Tap Start’ to start it. I will update you every minute.
                     """,
                     usesTimer: true,
                     timerTime: 120,
@@ -203,7 +203,7 @@ class Model: ObservableObject {
                     speakSteps: """
                     Now it’s time to wait for the tomatoes to cook! I will help you with a 3-minute Timer.
                     
-                    When you’re ready, say ‘Tap Start Timer’. I will update you every minute. When I do, you can gently mix the tomatoes in the pan.
+                    When you’re ready, say ‘Tap Start’. I will update you every minute. When I do, you can gently mix the tomatoes in the pan.
                     """,
                     usesTimer: true,
                     timerTime: 180,
@@ -218,7 +218,7 @@ class Model: ObservableObject {
                     
                     I will help you with a 2-minute timer; it will be enough for the tomato sauce to mix with the pasta and for the pasta to heat up again.
                     
-                    When you’re ready, say ‘Tap Start Timer’. 
+                    When you’re ready, say ‘Tap Start’. 
                     I will update you every minute. Whenever I update you, you can give it a gentle mix.
                     """,
                     usesTimer: true,
@@ -243,61 +243,147 @@ class Model: ObservableObject {
         
         RecipesList(
             recipeName: "Tiramisu",
-            ingredients: "1 cup of cooled strong brewed coffee, 1 tablespoon sugar, 1 cup mascarpone cheese, 1 cup heavy cream, 1/4 cup powdered sugar, 1 teaspoon vanilla extract, 1 pack ladyfinger cookies (savoiardi), Unsweetened cocoa powder, A pinch of salt",
-            numberOfSteps: 4,
+            ingredients: "1 cup of cooled strong brewed coffee, 1 tablespoon sugar, 1 cup mascarpone cheese, 1 cup heavy cream, a quarter cup powdered sugar, 1 teaspoon vanilla extract, 1 pack ladyfinger cookies (savoiardi), Unsweetened cocoa powder",
+            numberOfSteps: 9,
             imageName: "tiramisu",
             difficulty: "Medium",
-            timeToCook: 15,
+            timeToCook: 20,
+            calories: 800,
+            servings: 4,
             glutenFree: false,
             steps: [
                 RecipeStep(
-                    step: "1. Gather ingredients",
-                    imageName: "pasta",
+                    step: "1. Brew Coffee",
+                    imageName: "tiramisu",
                     description: """
-                    Let’s gather all the ingredients and place them on a clean, accessible table. When you’re ready with everything on the table, say ‘ready.’
-
-                    Ingredients:
-                    • 2 Heck 97% Sausages
-                    • 1 260g Neapolitan Dough ball
-                    • 80g Fior Di Latte Mozzarella
-                    • 10g Smoked Mozzarella (scamorza)
-                    • A pinch of grated Hard Cheese
-                    • 2 handfuls of cooked Friarielli
+                    Let's brew some coffee!
                     """,
-                    speakSteps: "",
+                    speakSteps: """
+                    Brew 1 cup of strong coffee. Let it cool to room temperature. If you prefer, add 1 tablespoon of sugar to the coffee for sweetness and set it aside.
+                    
+                    Once you did it, say ‘Tap Next Step’ to move onto the next step.
+                    """,
                     usesTimer: false,
                     timerTime: 0,
                     afterTimerText: ""
                 ),
                 RecipeStep(
-                    step: "2. Prepare tomatoes",
-                    imageName: "patate",
+                    step: "2. Make the Cream Mixture",
+                    imageName: "tiramisu",
                     description: """
-                    Place tomatoes in a large pot and cover with cold water. Bring just to a boil. Pour off water, and cover again with cold water. Peel the skin off tomatoes and cut into small pieces.
+                    Now it's time to make the cream!
                     """,
-                    speakSteps: "",
+                    speakSteps: """
+                    In a mixing bowl, add 1 cup of mascarpone cheese, 1 cup of heavy cream, a quarter cup of powdered sugar, and 1 teaspoon of vanilla extract.
+                    
+                    Once you do it, say ‘Tap Next Step’ to move onto the next step.
+                    """,
                     usesTimer: false,
                     timerTime: 0,
                     afterTimerText: ""
                 ),
                 RecipeStep(
-                    step: "3. Cook the sauce",
-                    imageName: "pasta",
+                    step: "3. Whip the Cream",
+                    imageName: "tiramisu",
                     description: """
-                    Meanwhile, heat olive oil in a large skillet or pan, ensuring there is enough to cover the bottom of the pan. Sauté garlic until opaque but not browned. Stir in tomato paste. Immediately stir in the tomatoes, salt, and pepper. Reduce heat, and simmer until pasta is ready, adding basil at the end.
+                    Now it's time to whip the cream!
                     """,
-                    speakSteps: "",
+                    speakSteps: """
+                    Use a hand mixer or whisk to mix the ingredients on medium speed until the cream thickens and holds soft peaks. I will help you with a 2-minute timer; it will be enough for the cream to not be too stiff.               
+                    
+                    When you’re ready, say ‘Tap Start’. 
+                    I will update you every minute.
+                    """,
+                    usesTimer: true,
+                    timerTime: 120,
+                    afterTimerText: "Time is up! Say ‘Tap Next Step’ to move onto the next step"
+                ),
+                RecipeStep(
+                    step: "4. Prepare the Ladyfingers",
+                    imageName: "tiramisu",
+                    description: """
+                    It's time to prepare the ladyfingers!
+                    """,
+                    speakSteps: """
+                    Dip each ladyfinger briefly into the cooled coffee. Don’t soak them—just a quick dip so they are moist but not soggy. Lay them in a 9 by 9-inch dish or a similar-sized serving dish.
+                    
+                    When you’re ready, say ‘Tap Next Step’ to move onto the next step. 
+                    """,
                     usesTimer: false,
                     timerTime: 0,
                     afterTimerText: ""
                 ),
                 RecipeStep(
-                    step: "4. Combine pasta and sauce",
-                    imageName: "pasta",
+                    step: "5. Layer the Tiramisu",
+                    imageName: "tiramisu",
                     description: """
-                    Drain pasta; do not rinse in cold water. Toss with a bit of olive oil, then mix into the sauce.
+                    Let's layer the whipped cream!
                     """,
-                    speakSteps: "",
+                    speakSteps: """
+                    Spread half of the whipped cream mixture over the layer of dipped ladyfingers. Use a spoon or spatula to spread it evenly.
+                    
+                    When you’re ready, say ‘Tap Next Step’ to move onto the next step. 
+                    """,
+                    usesTimer: false,
+                    timerTime: 0,
+                    afterTimerText: ""
+                ),
+                RecipeStep(
+                    step: "6. Add Another Layer",
+                    imageName: "tiramisu",
+                    description: """
+                    Add another layer.
+                    """,
+                    speakSteps: """
+                    Add another layer of dipped ladyfingers on top of the cream. Make sure the cookies are aligned and cover the entire surface.
+                    
+                    When you’re ready, say ‘Tap Next Step’ to move onto the next step. 
+                    """,
+                    usesTimer: false,
+                    timerTime: 0,
+                    afterTimerText: ""
+                ),
+                RecipeStep(
+                    step: "7. Top with Remaining Cream",
+                    imageName: "tiramisu",
+                    description: """
+                    Top the new layer with the remaining cream.
+                    """,
+                    speakSteps: """
+                    Spread the remaining whipped cream mixture over the second layer of ladyfingers. Smooth it out evenly with a spoon or spatula.
+                    
+                    When you’re ready, say ‘Tap Next Step’ to move onto the next step. 
+                    """,
+                    usesTimer: false,
+                    timerTime: 0,
+                    afterTimerText: ""
+                ),
+                RecipeStep(
+                    step: "8. Chill the Tiramisu",
+                    imageName: "tiramisu",
+                    description: """
+                    Chill the Tiramisu.
+                    """,
+                    speakSteps: """
+                    Cover the dish with plastic wrap or a lid. Refrigerate the tiramisu for at least 4 hours (or overnight) to let it set.
+                    
+                    When you’re ready, say ‘Tap Next Step’ to move onto the next step. 
+                    """,
+                    usesTimer: false,
+                    timerTime: 0,
+                    afterTimerText: ""
+                ),
+                RecipeStep(
+                    step: "9. Serve",
+                    imageName: "tiramisu",
+                    description: """
+                    Time to serve!
+                    """,
+                    speakSteps: """
+                    Before serving, dust the top of the tiramisu with a thin layer of unsweetened cocoa powder using a sifter or small mesh strainer. Serve chilled.
+                    
+                    We are done! Say ‘Tap Complete’, or, 'Tap Exit', to finish the process! 
+                    """,
                     usesTimer: false,
                     timerTime: 0,
                     afterTimerText: ""
