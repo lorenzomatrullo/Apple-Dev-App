@@ -245,7 +245,7 @@ class Model: ObservableObject {
             recipeName: "Tiramisu",
             ingredients: "1 cup of cooled strong brewed coffee, 1 tablespoon sugar, 1 cup mascarpone cheese, 1 cup heavy cream, 1/4 cup powdered sugar, 1 teaspoon vanilla extract, 1 pack ladyfinger cookies (savoiardi), Unsweetened cocoa powder, A pinch of salt",
             numberOfSteps: 4,
-            imageName: "Tiramisuf",
+            imageName: "tiramisu",
             difficulty: "Medium",
             timeToCook: 15,
             glutenFree: false,
