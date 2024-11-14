@@ -83,7 +83,7 @@ struct FirstPageView: View {
             synth.stopSpeaking(at: .immediate)
             SpeakMessage(str: "We are back at the cookbook page!", speechSynthesizer: synth)
             
-            let commandMessage = "To get started with a recipe, you can just say 'tap' followed by the recipe name, like 'tap tomato pasta'. Or 'tap salad'."
+            let commandMessage = "To get started with a recipe, you can just say 'tap' followed by the recipe name, like 'tap tomato pasta'. Or 'tap tiramisu'."
             SpeakMessage(str: commandMessage, speechSynthesizer: synth)
             
             hasToAnnounceHomepage = false
@@ -111,7 +111,7 @@ struct FirstPageView: View {
             
             let welcomeMessage = """
             Welcome to TasteEcho. Here’s your cooking instruction. I’ll guide you step by step.
-            To start a recipe, just say 'tap' and then the recipe name. Like 'Tap tomato pasta', or, 'tap salad' to begin.
+            To start a recipe, just say 'tap' and then the recipe name. Like 'Tap tomato pasta', or, 'tap tiramisu' to begin.
             You can always say “tap Repeat”, if you want to hear each step one more time. Or say, “tap Help”, if you don’t remember how to navigate through the steps.
             
             
@@ -134,7 +134,7 @@ struct FirstPageView: View {
             UserDefaults.standard.set(true, forKey: "hasLaunchedBefore")
         } else {
             // Subsequent launches - Show shorter message
-            let shortMessage = "Welcome back to TasteEcho. Let's start cooking, you can choose between tomato pasta, or, salad, I will wait for your answer."
+            let shortMessage = "Welcome back to TasteEcho. Let's start cooking, you can choose between tomato pasta, or, tiramisu, I will wait for your answer."
             SpeakMessage(str: shortMessage, speechSynthesizer: synth)
         }
 

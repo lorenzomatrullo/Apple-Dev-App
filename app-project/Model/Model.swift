@@ -422,7 +422,7 @@ public func SpeakMessage(str: String, speechSynthesizer: AVSpeechSynthesizer) {
 public func HelpButtonPressed(status: HelpButtonState, synth: AVSpeechSynthesizer, meal: RecipesList?, cookingState: CookingState?) {
     switch status {
     case .HOME_PAGE:
-        SpeakMessage(str: "You are currently in the 'Home Page'. You can say 'Tap Tomato Pasta' or 'Tap Salad' to get more information about the recipe.", speechSynthesizer: synth)
+        SpeakMessage(str: "You are currently in the 'Home Page'. You can say 'Tap Tomato Pasta' or 'Tap Tiramisu' to get more information about the recipe.", speechSynthesizer: synth)
         
     case .MEAL_PAGE:
         if let meal = meal {
